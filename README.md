@@ -1,44 +1,91 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
+<p align="center">
+  <img src="https://ik.imagekit.io/vhx2sevqtq/method-draw-image_p2GEAGPyO.svg" width="300" heigth="300">
+</p>
 
-## Available Scripts
 
-In the project directory, you can run:
+<p align="center">
+  <a href="LICENSE">
+    <img alt="License" src="https://img.shields.io/badge/license-MIT-%23F8952D">
+  </a>
+</p>
 
-### `yarn start`
+___
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h3 align="center">
+  <a href="#information_source-about">About</a>&nbsp;|&nbsp;
+  <a href="#interrobang-reason">Reason</a>&nbsp;|&nbsp;
+  <a href="#seedling-minimum-requirements">Requirements</a>&nbsp;|&nbsp;
+  <a href="#rocket-technologies-used">Technologies</a>&nbsp;|&nbsp;
+  <a href="#link-how-to-contribute">How to Contribute</a>&nbsp;|&nbsp;
+  <a href="#licença">License</a>
+</h3>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+___
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## :information_source: About
 
-### `yarn build`
+An API to search for investment funds, prices, and volume of your preferred stock, anything you want.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## :interrobang: Reason
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The first goal for this project was to learn more about typescript, which I have used just one time, the second is because I love the investment world and I accidentally discovered the Alpha Vantage API.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## :seedling: Minimum Requirements
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- NodeJS v10
+- YARN
+- You also need an API_KEY from Alpha Vantage, you can get this [free](https://www.alphavantage.co/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## :rocket: Technologies Used
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The project was developed using the following technologies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- NodeJS
+- Typescript
+- Express
+- Axios
+- Celebrate
 
-## Learn More
+## :link: How to Contribute
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Fork this repostory
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Using github CLI
+    ```bash
+    # You can also use the second option
+    $ gh repo fork wejesuss/s1cket
+    ```
+
+2. Using the website
+    1. You just need to click the 'Fork' button on the top of [this page](https://github.com/wejesuss/s1cket)
+
+- Clone your fork
+    ```bash
+    $ git clone https://github.com/your-username/s1cket && cd s1cket
+    # You can also download the zip in your repository page
+    ```
+
+- Create a branch with your changes
+    ```bash
+    $ git checkout -b my-awesome-changes
+    ```
+
+- Make the commit with your changes
+    ```bash
+    $ git commit -m 'fix: 42'
+    ```
+
+- Push your branch
+    ```bash
+    # Send the code to your remote branch
+    $ git push origin my-awesome-changes
+    ```
+
+- Pull request your changes
+
+## License
+
+This project is under the MIT license. See the [LICENSE](LICENSE) file.
