@@ -1,0 +1,16 @@
+.select-block .custom-arrow,
+.select-block .custom-arrow > svg {
+  display: block;
+  position: absolute;
+  right: 4px;
+  height: 100%;
+  width: 1.7rem;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.select-block .custom-arrow svg {
+  stroke-width: 4px;
+  transform: translateY(-50%) rotate(-180deg);
+}

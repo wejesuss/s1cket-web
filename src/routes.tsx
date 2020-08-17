@@ -1,15 +1,18 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import Home from './pages/Home';
+import Stocks from './pages/Stocks';
+
 const Routes: FC = () => {
   return (
     <BrowserRouter>
       <Route exact path="/">
-        <h1>teste</h1>
+        <Home />
       </Route>
 
-      <Route path="/teste">
-        <h1>Teste2</h1>
+      <Route path="/stocks">
+        <Stocks />
       </Route>
     </BrowserRouter>
   );

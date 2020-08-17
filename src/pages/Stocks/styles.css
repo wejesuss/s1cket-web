@@ -1,0 +1,118 @@
+#stocks form {
+  float: right;
+  margin-top: 4.8rem;
+  margin-right: 3.2rem;
+}
+
+#stocks div[role="group"] {
+  display: flex;
+  align-items: center;
+}
+
+#stocks #legend {
+  font-size: 2.4rem;
+  color: #A664B0;
+  letter-spacing: 1px;
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+#stocks .select-block {
+  position: relative;
+  margin-left: 2.4rem;
+}
+
+#stocks .select-block select,
+#stocks .input-block input {
+  appearance: none;
+  outline: none;
+  padding: 1rem 3.4rem 1rem 1rem;
+  border: 1.6px solid #1C54E5;
+  color: #494949;
+  font-size: 1.5rem;
+}
+
+#stocks .input-block {
+  position: relative;
+  margin: 0 1rem 0 2.4rem;
+}
+
+#stocks label {
+  user-select: none;
+  color: #494949;
+  position: absolute;
+  width: max-content;
+  bottom: 12px;
+  left: 0;
+  font-size: 1.5rem;
+  text-indent: 1rem;
+}
+
+#stocks .input-block input {
+  width: 20rem;
+  padding: 1rem;
+}
+
+#stocks label.up {
+  width: 100%;
+  text-align: center;
+  text-indent: 0;
+  user-select: initial;
+  bottom: 48px;
+}
+
+#stocks button {
+  background: transparent;
+}
+
+@media (min-width: 800px) and (max-width: 1024px) {
+  html {
+    font-size: 46%;
+  }
+
+  #stocks label {
+    bottom: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  #stocks form {
+    margin-right: 0;
+  }
+
+  #stocks div[role="group"] {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 90vh;
+    max-height: 500px;
+    width: 100vw;
+  }
+
+  #stocks #legend {
+    font-size: 3.2rem;
+  }
+
+  #stocks .select-block,
+  #stocks .input-block {
+    max-width: 300px;
+    width: 100%;
+    margin: 1.6rem 0;
+  }
+
+  #stocks .select-block select,
+  #stocks .input-block input {
+    width: 100%;
+    font-size: 2rem;
+  }
+
+  #stocks label {
+    font-size: 2.4rem;
+    bottom: 8px;
+  }
+
+  #stocks button img {
+    width: 32px;
+    height: 32px;
+  }
+}
