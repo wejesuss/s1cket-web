@@ -1,5 +1,6 @@
 #stocks form {
-  float: right;
+  display: flex;
+  justify-content: flex-end;
   margin-top: 4.8rem;
   margin-right: 3.2rem;
 }
@@ -19,11 +20,9 @@
 
 #stocks .select-block {
   position: relative;
-  margin-left: 2.4rem;
 }
 
-#stocks .select-block select,
-#stocks .input-block input {
+#stocks .select-block select {
   appearance: none;
   outline: none;
   padding: 1rem 3.4rem 1rem 1rem;
@@ -34,23 +33,13 @@
 
 #stocks .input-block {
   position: relative;
-  margin: 0 1rem 0 2.4rem;
 }
 
 #stocks label {
   user-select: none;
-  color: #494949;
   position: absolute;
-  width: max-content;
   bottom: 12px;
   left: 0;
-  font-size: 1.5rem;
-  text-indent: 1rem;
-}
-
-#stocks .input-block input {
-  width: 20rem;
-  padding: 1rem;
 }
 
 #stocks label.up {
@@ -91,19 +80,6 @@
 
   #stocks #legend {
     font-size: 3.2rem;
-  }
-
-  #stocks .select-block,
-  #stocks .input-block {
-    max-width: 300px;
-    width: 100%;
-    margin: 1.6rem 0;
-  }
-
-  #stocks .select-block select,
-  #stocks .input-block input {
-    width: 100%;
-    font-size: 2rem;
   }
 
   #stocks label {

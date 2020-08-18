@@ -1,26 +1,64 @@
 import React, { useState, FormEvent } from 'react';
+
 import Header from '../../components/Header';
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+
+import api from '../../services/api';
+import { PolishedIntradayDailyAndWeekly, PolishedSearch } from '../../services/api-types';
 
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
-import CustomArrow from '../../components/CustomArrow';
-import api from '../../services/api';
+import StockBySymbol from '../../components/StockBySymbol';
 
 const Stocks: React.FC = () => {
   const [type, setType] = useState('name');
+  const [search, setSearch] = useState('');
   const [series, setSeries] = useState('intraday');
   const [intervalTime, setIntervalTime] = useState('5min');
   const [outputSize, setOutputSize] = useState('compact');
-  const [search, setSearch] = useState('');
+
   const [total, setTotal] = useState(0);
-  const [searchs, setSearchs] = useState([]);
+  const [resultsByName, setResultsByName] = useState<PolishedSearch>([]);
+  const [resultsBySymbol, setResultsBySymbol] = useState<PolishedIntradayDailyAndWeekly>();
+  const [isResultsEmpty, setIsResultsEmpty] = useState({ byName: false, bySymbol: false });
 
   async function searchByName(name: string) {
     try {
-      const results = await api.get(`/search/${name}`);
+      const results = await api.get<PolishedSearch>(`/search/${name}`);
 
       setTotal(results.headers['x-total-count']);
-      setSearchs(results.data);
+      setResultsByName(results.data);
+
+      if(results.data.length < 1) {
+        setIsResultsEmpty({...isResultsEmpty, byName: true})
+      } else {
+        setIsResultsEmpty({...isResultsEmpty, byName: false})
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Erro inesperado, tente novamente em breve');
+    }
+  }
+
+  async function searchBySymbol(symbol: string) {
+    try {
+      const results = await api.get<PolishedIntradayDailyAndWeekly>(`/prices/${series}/${symbol}`, {
+        params: {
+          interval: intervalTime,
+          outputsize: outputSize
+        }
+      });
+
+      console.log(results.data)
+
+      setResultsBySymbol(results.data);
+
+      if(results.data.error) {
+        setIsResultsEmpty({...isResultsEmpty, bySymbol: true})
+      } else {
+        setIsResultsEmpty({...isResultsEmpty, bySymbol: false})
+      }
     } catch (error) {
       console.error(error);
       alert('Erro inesperado, tente novamente em breve');
@@ -29,19 +67,27 @@ const Stocks: React.FC = () => {
 
   function handleSearchStocks(e: FormEvent) {
     e.preventDefault();
-    const twoMinutes = 120000;
-    const twoMinutesWaited =
-      Date.now() > Number(localStorage.getItem('last')) + twoMinutes;
 
-    if (!twoMinutesWaited) {
+    if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
       return;
     }
 
     if (type === 'name') {
       searchByName(search);
-      localStorage.setItem('last', `${Date.now()}`);
+    } else {
+      searchBySymbol(search)
     }
+
+    localStorage.setItem('last', `${Date.now()}`);
+  }
+
+  function waitTwoMinutes() {
+    const twoMinutes = 120000;
+    const twoMinutesWaited =
+      Date.now() > Number(localStorage.getItem('last')) + twoMinutes;
+
+    return twoMinutesWaited
   }
 
   return (
@@ -52,97 +98,40 @@ const Stocks: React.FC = () => {
           <div role="group" aria-labelledby="legend">
             <div id="legend">O que deseja ?</div>
 
-            <div className="select-block">
-              <select
-                name="type"
-                id="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              >
-                <option value="name">Pesquisar pelo nome</option>
-                <option value="symbol">Pesquisar pelo símbolo</option>
-              </select>
-              <span className="custom-arrow">
-                <CustomArrow />
-              </span>
-            </div>
+            <Select
+              name="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              options={[
+                { label: "Pesquisar pelo nome", value: "name" },
+                { label: "Pesquisar pelo símbolo", value: "symbol" }
+              ]}
+            />
 
             {type === 'symbol' && (
-              <>
-                <div className="select-block">
-                  <select
-                    name="series"
-                    id="series"
-                    value={series}
-                    onChange={(e) => setSeries(e.target.value)}
-                  >
-                    <option value="intraday">Intraday</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                  </select>
-                  <span className="custom-arrow">
-                    <CustomArrow />
-                  </span>
-                  <label htmlFor="series" className="up">
-                    Série Temporal
-                  </label>
-                </div>
-
-                <div className="select-block">
-                  <select
-                    name="interval"
-                    id="interval"
-                    value={intervalTime}
-                    onChange={(e) => setIntervalTime(e.target.value)}
-                  >
-                    <option value="1min">1 Min</option>
-                    <option value="5min">5 Min</option>
-                    <option value="15min">15 Min</option>
-                    <option value="30min">30 Min</option>
-                    <option value="60min">60 Min</option>
-                  </select>
-                  <span className="custom-arrow">
-                    <CustomArrow />
-                  </span>
-                  <label htmlFor="interval" className="up">
-                    Intervalo
-                  </label>
-                </div>
-
-                <div className="select-block">
-                  <select
-                    name="output"
-                    id="output"
-                    value={outputSize}
-                    onChange={(e) => setOutputSize(e.target.value)}
-                  >
-                    <option value="compact">Compacto</option>
-                    <option value="full">Completo</option>
-                  </select>
-                  <span className="custom-arrow">
-                    <CustomArrow />
-                  </span>
-                  <label htmlFor="output" className="up">
-                    Saída
-                  </label>
-                </div>
-              </>
+              <StockBySymbol
+                series={series}
+                intervalTime={intervalTime}
+                outputSize={outputSize}
+                setSeries={setSeries}
+                setIntervalTime={setIntervalTime}
+                setOutputSize={setOutputSize}
+              />
             )}
 
-            <div className="input-block">
-              <input
-                type="text"
-                id="search"
-                name="search"
-                spellCheck="false"
-                autoComplete="off"
-                onChange={(e) => setSearch(e.target.value)}
-                value={search}
-              />
-              <label htmlFor="search" className={search ? 'up' : ''}>
-                Nome da empresa/fundo
-              </label>
-            </div>
+            <Input
+              label={
+                type === 'name'
+                  ? 'Nome da empresa/fundo'
+                  : 'Símbolo da empresa/fundo'
+              }
+              upLabel={search ? 'up' : ''}
+              name="search"
+              spellCheck="false"
+              autoComplete="off"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
 
             <button type="submit">
               <img src={searchIcon} alt="Pesquisar" />
@@ -150,32 +139,20 @@ const Stocks: React.FC = () => {
           </div>
         </form>
         <main>
-          {searchs.map(
-            (searchItem: {
-              symbol: string;
-              currency: string;
-              marketClose: string;
-              marketOpen: string;
-              matchScore: string;
-              name: string;
-              region: string;
-              timezone: string;
-              type: string;
-            }) => (
-              <div key={searchItem.symbol}>
-                <div>{total}</div>
-                <div>{searchItem.currency}</div>
-                <div>{searchItem.marketClose}</div>
-                <div>{searchItem.marketOpen}</div>
-                <div>{searchItem.matchScore}</div>
-                <div>{searchItem.name}</div>
-                <div>{searchItem.region}</div>
-                <div>{searchItem.symbol}</div>
-                <div>{searchItem.timezone}</div>
-                <div>{searchItem.type}</div>
-              </div>
-            ),
+          {type === "name" ? resultsByName.map(result => (
+            <div key={result.symbol}>
+              <div>{result.symbol}</div>
+              <div>{total}</div>
+            </div>
+          )) : (
+            <p key={resultsBySymbol?.data?.symbol}>{resultsBySymbol?.timeSeries?.a?.close}</p>
           )}
+
+          {(type === "name" && isResultsEmpty.byName) ? (
+            <p>Nenhum resultado encontrado</p>
+          ) : (type === "symbol" && isResultsEmpty.bySymbol) ? (
+            <p>Nenhum resultado encontrado</p>
+          ) : null }
         </main>
       </div>
     </>
