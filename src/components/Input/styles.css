@@ -1,0 +1,37 @@
+.input-block input {
+  appearance: none;
+  outline: none;
+  padding: 1rem 3.4rem 1rem 1rem;
+  border: 1.6px solid #1C54E5;
+  color: #494949;
+  font-size: 1.5rem;
+}
+
+.input-block {
+  margin: 0 1rem 0 2.4rem;
+}
+
+.input-block label {
+  color: #494949;
+  width: max-content;
+  font-size: 1.5rem;
+  text-indent: 1rem;
+}
+
+.input-block input {
+  width: 20rem;
+  padding: 1rem;
+}
+
+@media (max-width: 700px) {
+  .input-block {
+    max-width: 300px;
+    width: 100%;
+    margin: 1.6rem 0;
+  }
+
+  .input-block input {
+    width: 100%;
+    font-size: 2rem;
+  }
+}
