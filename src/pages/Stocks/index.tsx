@@ -139,19 +139,46 @@ const Stocks: React.FC = () => {
           </div>
         </form>
         <main>
-          {type === "name" ? resultsByName.map(result => (
-            <div key={result.symbol}>
-              <div>{result.symbol}</div>
-              <div>{total}</div>
-            </div>
-          )) : (
-            <p key={resultsBySymbol?.data?.symbol}>{resultsBySymbol?.timeSeries?.a?.close}</p>
+          {type === "name" ?
+            resultsByName.length > 0 && (
+              <>
+                <h1 className="results-title">Estes são os resultados da sua busca</h1>
+                <div className="results">
+                  {resultsByName.map(result => (
+                    <article key={result.symbol}>
+                      <header>
+                        <h1>{result.name} <sup>{result.symbol}</sup></h1>
+                        <div className="info">
+                          <div className="row">
+                            <h5>Tipo</h5>
+                            <h6>{result.type}<sup>{result.currency}</sup></h6>
+                          </div>
+
+                          <div className="row">
+                            <h5>Região</h5>
+                            <h6>{result.region}</h6>
+                          </div>
+                        </div>
+                      </header>
+
+                      <footer>
+                        <button>Intraday</button>
+                        <button>Daily</button>
+                        <button>Weekly</button>
+                      </footer>
+                    </article>
+                  ))}
+                </div>
+                <p className="results-end">Parece que chegamos ao fim!</p>
+              </>
+            ) : (
+            <p>{resultsBySymbol?.data?.information}</p>
           )}
 
           {(type === "name" && isResultsEmpty.byName) ? (
-            <p>Nenhum resultado encontrado</p>
+            <p className="no-results">Nenhum resultado encontrado</p>
           ) : (type === "symbol" && isResultsEmpty.bySymbol) ? (
-            <p>Nenhum resultado encontrado</p>
+            <p className="no-results">Nenhum resultado encontrado</p>
           ) : null }
         </main>
       </div>
