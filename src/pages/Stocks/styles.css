@@ -22,15 +22,6 @@
   position: relative;
 }
 
-#stocks .select-block select {
-  appearance: none;
-  outline: none;
-  padding: 1rem 3.4rem 1rem 1rem;
-  border: 1.6px solid #1C54E5;
-  color: #494949;
-  font-size: 1.5rem;
-}
-
 #stocks .input-block {
   position: relative;
 }
@@ -52,6 +43,11 @@
 
 #stocks button {
   background: transparent;
+  transition: .2s;
+}
+
+#stocks form button:hover {
+  transform: scale(1.1) rotate(20deg);
 }
 
 #stocks main {
@@ -82,8 +78,10 @@
 
 #stocks article {
   box-sizing: content-box;
-  width: 32rem;
-  height: 15.6rem;
+  width: 90%;
+  max-width: 370px;
+  height: 17rem;
+  max-height: 170px;
   padding: 1.6rem;
 
   display: flex;
@@ -136,6 +134,16 @@
   text-align: left;
 }
 
+#stocks article .info .prices {
+  margin-top: 0.8rem;
+}
+
+#stocks article .info .prices h5 {
+  width: 100%;
+  text-align: center;
+  line-height: normal;
+}
+
 #stocks article .info h6 {
   font-weight: normal;
   font-size: 1.5rem;
@@ -153,7 +161,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 28rem;
+  width: 90%;
+  max-width: 300px;
   height: 1.8rem;
   margin: 0 auto;
 }
@@ -198,6 +207,50 @@
   margin: 0;
 }
 
+#stocks main table {
+  margin: 0 auto;
+  border: 1px solid black;
+  border-spacing: 16px 0px;
+  text-align: center;
+}
+
+#stocks main table caption {
+  width: max-content;
+  font-size: 1.4rem;
+  margin: 0 auto;
+  margin-bottom: 1.6rem;
+  color: rgba(1,1,1, 0.7);
+}
+
+#stocks main table th {
+  border-right: 1px solid;
+  border-collapse: collapse;
+  padding: 8px 16px;
+  padding-left: 0;
+  text-transform: uppercase;
+}
+
+#stocks main table th,
+#stocks main table td {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, .8);
+}
+
+#stocks main table td {
+  border: 0;
+  padding: 8px 0;
+
+  font-weight: 400;
+  color: rgba(0, 0, 0, .9);
+}
+
+#stocks .chart {
+  margin: 6.4rem auto 0;
+}
+
 @media (min-width: 800px) and (max-width: 1024px) {
   html {
     font-size: 46%;
@@ -205,6 +258,10 @@
 
   #stocks label {
     bottom: 8px;
+  }
+
+  #stocks main .results {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   }
 }
 
@@ -218,12 +275,20 @@
     align-items: center;
     justify-content: space-around;
     height: 90vh;
-    max-height: 500px;
+    max-height: 300px;
     width: 100vw;
+  }
+
+  #stocks div[role="group"].symbol {
+    max-height: 400px;
   }
 
   #stocks #legend {
     font-size: 3.2rem;
+  }
+
+  #stocks main .results {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   }
 
   #stocks label {
@@ -231,8 +296,51 @@
     bottom: 8px;
   }
 
+  #stocks div[role="group"].symbol label.up {
+    bottom: 40px;
+  }
+
+  #stocks div[role="group"].symbol .input-block,
+  #stocks div[role="group"].symbol .select-block {
+    margin: 2rem 0;
+  }
+
   #stocks button img {
     width: 32px;
     height: 32px;
   }
+
+  #stocks article {
+    height: 20rem;
+  }
+
+  #stocks article h1 {
+    font-size: 1.8rem;
+  }
+
+  #stocks article sup {
+    font-size: 1.2rem;
+  }
+
+  #stocks article .info h5 {
+    font-size: 1.6rem;
+    line-height: 3.2rem;
+  }
+
+  #stocks article .info h6 {
+    font-size: 1.8rem;
+    line-height: 3.2rem;
+  }
+
+  #stocks article footer button {
+    width: 9rem;
+    height: 2.4rem;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+  }
+
+  #stocks main .no-results {
+    font-size: 2rem;
+  }
+
 }

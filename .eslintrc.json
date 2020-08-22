@@ -34,6 +34,7 @@
         "react/jsx-props-no-spreading": {
           "html": "ignore"
         },
+        "no-nested-ternary": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

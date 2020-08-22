@@ -11,7 +11,7 @@ export interface PolishedMetaIntradayDailyAndWeekly {
   timeZone: string;
 }
 
-type PolishedInformations = 'open' | 'high' | 'low' | 'close' | 'volume';
+export type PolishedInformations = 'open' | 'high' | 'low' | 'close' | 'volume';
 
 export interface PolishedIntradayDailyAndWeekly {
   data: PolishedMetaIntradayDailyAndWeekly | undefined;
