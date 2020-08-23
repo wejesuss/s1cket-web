@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
         </div>
         {hasFavorites && (
           <div className="favorites">
-            <Link to="/favorites?type=stock">Ver Favoritos</Link>
+            <Link to={"/favorites?search=" + activePage.toLowerCase()}>Ver Favoritos</Link>
           </div>
         )}
         <nav className={opened ? 'menu opened' : 'menu'}>
