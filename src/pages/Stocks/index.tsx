@@ -1,9 +1,10 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Header from '../../components/Header';
-import Input from '../../components/Input';
-import Select from '../../components/Select';
-import StockBySymbol from '../../components/StockBySymbol';
+import Chart from '../../components/Chart';
+import FormSearch from '../../components/FormSearch';
+import ArticleResult from '../../components/ArticleResult';
 
 import api from '../../services/api';
 import {
@@ -11,11 +12,11 @@ import {
   PolishedSearch,
 } from '../../services/api-types';
 
-import searchIcon from '../../assets/search.svg';
 import './styles.css';
-import Chart from '../../components/Chart';
+import { waitTwoMinutes } from '../../Helpers';
 
 const Stocks: React.FC = () => {
+  const history = useHistory()
   const [type, setType] = useState('name');
   const [search, setSearch] = useState('');
   const [series, setSeries] = useState('intraday');
@@ -24,23 +25,6 @@ const Stocks: React.FC = () => {
   const [resultsByName, setResultsByName] = useState<PolishedSearch>([]);
   const [resultsBySymbol, setResultsBySymbol] = useState<PolishedIntradayDailyAndWeekly>();
   const [isResultsEmpty, setIsResultsEmpty] = useState({ byName: false, bySymbol: false });
-
-  async function searchByName(name: string) {
-    try {
-      const results = await api.get<PolishedSearch>(`/search/${name}`);
-
-      setResultsByName(results.data);
-
-      if (results.data.length < 1) {
-        setIsResultsEmpty({ ...isResultsEmpty, byName: true });
-      } else {
-        setIsResultsEmpty({ ...isResultsEmpty, byName: false });
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
 
   async function searchBySymbol(symbol: string, series: string, interval: string, outputsize: string) {
     try {
@@ -54,13 +38,12 @@ const Stocks: React.FC = () => {
         },
       );
 
-      console.log(results.data);
-
       setResultsBySymbol(results.data);
 
       if (results.data.error) {
         setIsResultsEmpty({ ...isResultsEmpty, bySymbol: true });
       } else {
+        localStorage.setItem('last', `${Date.now()}`);
         setIsResultsEmpty({ ...isResultsEmpty, bySymbol: false });
       }
     } catch (error) {
@@ -69,97 +52,51 @@ const Stocks: React.FC = () => {
     }
   }
 
-  function waitTwoMinutes() {
-    const twoMinutes = 120000;
-    const twoMinutesWaited =
-      Date.now() > Number(localStorage.getItem('last')) + twoMinutes;
+  useEffect(() => {
+    const { state } = history.location;
 
-    return twoMinutesWaited;
-  }
+    if(state) {
+      const { series: incomingSeries, symbol: incomingSymbol } = state as { series?: string, symbol?: string };
+      searchWithFavorites(incomingSeries, incomingSymbol)
+    }
+    // eslint-disable-next-line
+  }, [])
 
-  function handleSearchStocks(e: FormEvent) {
-    e.preventDefault();
+  function searchWithFavorites(incomingSeries?: string, incomingSymbol?: string) {
+    const seriesToSearch = incomingSeries || series
+    const symbolToSearch = incomingSymbol || search
+    setType(() => 'symbol')
+    setSeries(() => seriesToSearch)
+    setSearch(() => symbolToSearch)
 
     if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
       return;
     }
 
-    if (type === 'name') {
-      searchByName(search);
-    } else {
-      searchBySymbol(search, series, intervalTime, outputSize);
-    }
-
-    localStorage.setItem('last', `${Date.now()}`);
-  }
-
-  function handleSearchStocksBySeries(series: string, symbol: string) {
-    if (!waitTwoMinutes()) {
-      alert('Espere dois minutos para pesquisar de novo');
-      return;
-    }
-
-    setSearch(symbol)
-    setSeries(series)
-    searchBySymbol(symbol, series, intervalTime, outputSize);
-    setType("symbol")
-
-    localStorage.setItem('last', `${Date.now()}`);
+    searchBySymbol(symbolToSearch, seriesToSearch, intervalTime, outputSize);
   }
 
   return (
     <>
       <Header name="stocks" activePage="Stocks" hasFavorites />
       <div id="stocks">
-        <form onSubmit={handleSearchStocks}>
-          <div
-            role="group"
-            aria-labelledby="legend"
-            className={type === 'symbol' ? 'symbol' : ''}
-          >
-            <div id="legend">O que deseja ?</div>
-
-            <Select
-              name="type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              options={[
-                { label: 'Pesquisar pelo nome', value: 'name' },
-                { label: 'Pesquisar pelo símbolo', value: 'symbol' },
-              ]}
-            />
-
-            {type === 'symbol' && (
-              <StockBySymbol
-                series={series}
-                intervalTime={intervalTime}
-                outputSize={outputSize}
-                setSeries={setSeries}
-                setIntervalTime={setIntervalTime}
-                setOutputSize={setOutputSize}
-              />
-            )}
-
-            <Input
-              label={
-                type === 'name'
-                  ? 'Nome da empresa/fundo'
-                  : 'Símbolo da empresa/fundo'
-              }
-              upLabel={search ? 'up' : ''}
-              name="search"
-              spellCheck="false"
-              autoComplete="off"
-              onChange={(e) => setSearch(e.target.value)}
-              value={search}
-            />
-
-            <button type="submit">
-              <img src={searchIcon} alt="Pesquisar" />
-            </button>
-          </div>
-        </form>
+        <FormSearch
+          setType={setType}
+          setSearch={setSearch}
+          setSeries={setSeries}
+          setIntervalTime={setIntervalTime}
+          setOutputSize={setOutputSize}
+          setIsResultsEmpty={setIsResultsEmpty}
+          setResultsByName={setResultsByName}
+          type={type}
+          search={search}
+          series={series}
+          intervalTime={intervalTime}
+          outputSize={outputSize}
+          isResultsEmpty={isResultsEmpty}
+          searchBySymbol={searchBySymbol}
+        />
         <main>
           {type === 'name' ? (
             resultsByName.length > 0 && (
@@ -169,37 +106,22 @@ const Stocks: React.FC = () => {
                 </h1>
                 <div className="results">
                   {resultsByName.map((result) => (
-                    <article key={result.symbol}>
-                      <header>
-                        <h1>
-                          {result.name} <sup>{result.symbol}</sup>
-                        </h1>
-                        <div className="info">
-                          <div className="row">
-                            <h5>Tipo</h5>
-                            <h6>
-                              {result.type}
-                              <sup>{result.currency}</sup>
-                            </h6>
-                          </div>
-
-                          <div className="row">
-                            <h5>Região</h5>
-                            <h6>{result.region}</h6>
-                          </div>
-
-                          <div className="row prices">
-                            <h5>Preços: </h5>
-                          </div>
-                        </div>
-                      </header>
-
-                      <footer>
-                        <button onClick={() => handleSearchStocksBySeries("intraday", result.symbol)}>Intraday</button>
-                        <button onClick={() => handleSearchStocksBySeries("daily", result.symbol)}>Daily</button>
-                        <button onClick={() => handleSearchStocksBySeries("weekly", result.symbol)}>Weekly</button>
-                      </footer>
-                    </article>
+                    <ArticleResult
+                      key={result.symbol}
+                      setIsResultsEmpty={setIsResultsEmpty}
+                      setResultsBySymbol={setResultsBySymbol}
+                      setSearch={setSearch}
+                      setSeries={setSeries}
+                      setType={setType}
+                      intervalTime={intervalTime}
+                      isResultsEmpty={isResultsEmpty}
+                      outputSize={outputSize}
+                      type={result.type}
+                      currency={result.currency}
+                      symbol={result.symbol}
+                      name={result.name}
+                      region={result.region}
+                    />
                   ))}
                 </div>
                 <p className="results-end">Parece que chegamos ao fim!</p>
