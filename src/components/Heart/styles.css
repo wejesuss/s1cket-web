@@ -1,0 +1,9 @@
+article header span {
+  position: absolute;
+  right: -24px;
+  top: -12px;
+}
+
+article header span img {
+  padding: 0 8px 8px;
+}
