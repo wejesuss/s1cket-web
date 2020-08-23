@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Stocks from './pages/Stocks';
+import Favorites from './pages/Favorites';
 
 const Routes: FC = () => {
   return (
@@ -13,6 +14,10 @@ const Routes: FC = () => {
 
       <Route path="/stocks">
         <Stocks />
+      </Route>
+
+      <Route path="/favorites">
+        <Favorites />
       </Route>
     </BrowserRouter>
   );
