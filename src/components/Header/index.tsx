@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                 Ações
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/cripto"
                 className={activePage === 'Bitcoin' ? 'active' : ''}
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                 <img src={bitcoin} alt="Bitcoin" />
                 Cripto
               </Link>
-            </li>
+            </li> */}
           </ul>
           <div id="burger" onClick={handleToggleNavigatorState}>
             <i></i>
@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                     Ações
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to="/cripto"
                     className={activePage === 'Bitcoin' ? 'active' : ''}
@@ -90,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                     <img src={bitcoin} alt="Bitcoin" />
                     Cripto
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

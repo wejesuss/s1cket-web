@@ -1,53 +1,11 @@
-#stocks form {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 4.8rem;
-  margin-right: 3.2rem;
-}
-
 #stocks div[role="group"] {
   display: flex;
   align-items: center;
 }
 
-#stocks #legend {
-  font-size: 2.4rem;
-  color: #A664B0;
-  letter-spacing: 1px;
-  font-weight: 300;
-  text-transform: capitalize;
-}
-
-#stocks .select-block {
-  position: relative;
-}
-
-#stocks .input-block {
-  position: relative;
-}
-
-#stocks label {
-  user-select: none;
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-}
-
-#stocks label.up {
-  width: 100%;
-  text-align: center;
-  text-indent: 0;
-  user-select: initial;
-  bottom: 48px;
-}
-
 #stocks button {
   background: transparent;
   transition: .2s;
-}
-
-#stocks form button:hover {
-  transform: scale(1.1) rotate(20deg);
 }
 
 #stocks main {
@@ -74,122 +32,6 @@
   gap: 6.4rem 3.2rem;
   justify-content: center;
   align-items: center;
-}
-
-#stocks article {
-  box-sizing: content-box;
-  width: 90%;
-  max-width: 370px;
-  height: 17rem;
-  max-height: 170px;
-  padding: 1.6rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  font-family: Roboto;
-  box-shadow: 3px 3px 2px -1px #e8e8e8d9;
-  background-color: #f6f6f6;
-  border: 1px solid #e8e8e8d9;
-}
-
-#stocks article h1 {
-  font-weight: 500;
-  font-size: 1.7rem;
-  text-align: center;
-  letter-spacing: 1px;
-  color: #8950D2;
-}
-
-#stocks article sup {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.1rem;
-  text-align: center;
-  color: #A880DC;
-}
-
-#stocks article .info {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  margin: 2rem 0;
-}
-
-#stocks article .info .row {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#stocks article .info h5 {
-  font-weight: normal;
-  font-size: 1.4rem;
-  line-height: 2.4rem;
-  color: #0F2594;
-  width: 40%;
-  text-align: left;
-}
-
-#stocks article .info .prices {
-  margin-top: 0.8rem;
-}
-
-#stocks article .info .prices h5 {
-  width: 100%;
-  text-align: center;
-  line-height: normal;
-}
-
-#stocks article .info h6 {
-  font-weight: normal;
-  font-size: 1.5rem;
-  line-height: 2.4rem;
-  color: #9562D7;
-  width: 50%;
-  text-align: left;
-}
-
-#stocks article .info h6 sup {
-  margin-left: .8rem;
-}
-
-#stocks article footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  max-width: 300px;
-  height: 1.8rem;
-  margin: 0 auto;
-}
-
-#stocks article footer button {
-  box-sizing: content-box;
-  width: 8rem;
-  height: 2rem;
-  padding: .08rem;
-  border-radius: 1.8rem;
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-  color: #842693e6;
-  border: .8px solid #A159AB;
-  outline-color: #A159AB;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: .2s;
-}
-
-#stocks article footer button:hover {
-  color: #ae3fbe;
-  border: 1px solid #6b1277;
 }
 
 #stocks main .results-end,
@@ -266,10 +108,6 @@
 }
 
 @media (max-width: 700px) {
-  #stocks form {
-    margin-right: 0;
-  }
-
   #stocks div[role="group"] {
     flex-direction: column;
     align-items: center;
@@ -283,17 +121,8 @@
     max-height: 400px;
   }
 
-  #stocks #legend {
-    font-size: 3.2rem;
-  }
-
   #stocks main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
-  }
-
-  #stocks label {
-    font-size: 2.4rem;
-    bottom: 8px;
   }
 
   #stocks div[role="group"].symbol label.up {
@@ -305,42 +134,7 @@
     margin: 2rem 0;
   }
 
-  #stocks button img {
-    width: 32px;
-    height: 32px;
-  }
-
-  #stocks article {
-    height: 20rem;
-  }
-
-  #stocks article h1 {
-    font-size: 1.8rem;
-  }
-
-  #stocks article sup {
-    font-size: 1.2rem;
-  }
-
-  #stocks article .info h5 {
-    font-size: 1.6rem;
-    line-height: 3.2rem;
-  }
-
-  #stocks article .info h6 {
-    font-size: 1.8rem;
-    line-height: 3.2rem;
-  }
-
-  #stocks article footer button {
-    width: 9rem;
-    height: 2.4rem;
-    font-size: 1.6rem;
-    line-height: 1.8rem;
-  }
-
   #stocks main .no-results {
     font-size: 2rem;
   }
-
 }
