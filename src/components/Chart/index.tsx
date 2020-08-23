@@ -26,7 +26,7 @@ interface ChartProps {
   width?: number | string;
 }
 
-const Chart: React.FC<ChartProps> = ({ series, type, name = 'volume', titleBar = 'Volume (M)', division = 1000000, height = 350, width = "90%" }) => {
+const Chart: React.FC<ChartProps> = ({ series, type, name = 'volume', titleBar = 'Volume (Mil)', division = 1000, height = 350, width = "90%" }) => {
   const [seriesPolished, setSeriesPolished] = useState([
     name ? { name, data: [] as PolishedSeries} : { data: [] as PolishedSeries },
   ]);
