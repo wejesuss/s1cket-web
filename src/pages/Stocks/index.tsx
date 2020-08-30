@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Chart from '../../components/Chart';
-import FormSearch from '../../components/FormSearch';
+import StockFormSearch from '../../components/StockFormSearch';
 import ArticleResult from '../../components/ArticleResult';
 
 import api from '../../services/api';
@@ -81,7 +81,7 @@ const Stocks: React.FC = () => {
     <>
       <Header name="stocks" activePage="Stocks" hasFavorites />
       <div id="stocks">
-        <FormSearch
+        <StockFormSearch
           setType={setType}
           setSearch={setSearch}
           setSeries={setSeries}
