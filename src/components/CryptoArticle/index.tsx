@@ -6,51 +6,41 @@ import './styles.css';
 
 interface ArticleProps {
   symbol: string;
-  currency: string;
   name: string;
-  region: string;
-  type: string;
-  seriesActionIntraday: Function;
+  currency: string;
+  currencyName: string;
   seriesActionDaily: Function;
   seriesActionWeekly: Function;
+  seriesActionMonthly: Function;
 }
 
-const Article: React.FC<ArticleProps> = (
+const CryptoArticle: React.FC<ArticleProps> = (
   { symbol,
-    currency,
     name,
-    region,
-    type,
-    seriesActionIntraday,
+    currency,
+    currencyName,
     seriesActionDaily,
-    seriesActionWeekly
+    seriesActionWeekly,
+    seriesActionMonthly
   }) => {
 
   return (
     <article>
       <header>
         <Heart
-          currency={currency}
-          name={name}
-          region={region}
+          action="crypto"
           symbol={symbol}
-          type={type}
+          currency={currency}
+          currencyName={currencyName}
+          name={name}
         />
         <h1>
           {name} <sup>{symbol}</sup>
         </h1>
         <div className="info">
           <div className="row">
-            <h5>Tipo</h5>
-            <h6>
-              {type}
-              <sup>{currency}</sup>
-            </h6>
-          </div>
-
-          <div className="row">
-            <h5>Região</h5>
-            <h6>{region}</h6>
+            <h5>Mercado: </h5>
+            <h6>{currencyName}/{currency}</h6>
           </div>
 
           <div className="row prices">
@@ -61,11 +51,6 @@ const Article: React.FC<ArticleProps> = (
 
       <footer>
         <button
-          onClick={() => seriesActionIntraday()}
-        >
-          Intraday
-        </button>
-        <button
           onClick={() => seriesActionDaily()}
         >
           Daily
@@ -75,9 +60,14 @@ const Article: React.FC<ArticleProps> = (
         >
           Weekly
         </button>
+        <button
+          onClick={() => seriesActionMonthly()}
+        >
+          Monthly
+        </button>
       </footer>
     </article>
   );
 };
 
-export default Article;
+export default CryptoArticle;
