@@ -8,6 +8,11 @@
   transition: .2s;
 }
 
+#stocks .input-block label.up,
+#stocks .select-block label.up {
+  bottom: 48px;
+}
+
 #stocks main {
   box-sizing: content-box;
   width: 90vw;
@@ -99,7 +104,7 @@
   }
 
   #stocks label {
-    bottom: 8px;
+    bottom: 48px;
   }
 
   #stocks main .results {
@@ -123,6 +128,14 @@
 
   #stocks main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+  }
+
+  #stocks .input-block input {
+    width: 100%;
+  }
+
+  #stocks div[role="group"].symbol label.up {
+    bottom: 40px;
   }
 
   #stocks div[role="group"].symbol label.up {
