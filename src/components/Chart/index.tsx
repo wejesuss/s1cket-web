@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as ApexChart from 'react-apexcharts';
 import pt_BR from "apexcharts/dist/locales/pt-br.json";
 
-import { PolishedInformations } from '../../services/api-types';
+import { PolishedInformations, PolishedCryptoSeriesData } from '../../services/api-types';
 
 type CandleStickPolished = {
   x: Date;
@@ -15,33 +15,48 @@ type BarPolished = {
 }[]
 
 type PolishedSeries = CandleStickPolished | BarPolished;
+type CryptoSeries = Record<string, PolishedCryptoSeriesData | undefined>;
+type StockSeries = Record<string, Record<PolishedInformations, string> | undefined>;
 
 interface ChartProps {
-  series: Record<string, Record<PolishedInformations, string> | undefined> | undefined;
+  stockSeries?: StockSeries;
+  cryptoSeries?: CryptoSeries;
+  currencyCode?: string;
   type: "bar" | "candlestick";
   name?: string;
+  id?: string;
   titleBar?: string;
+  titleCandle?: string;
   division?: number;
   height?: number | string;
   width?: number | string;
 }
 
-const Chart: React.FC<ChartProps> = ({ series, type, name = 'volume', titleBar = 'Volume (Mil)', division = 1000, height = 350, width = "90%" }) => {
+const Chart: React.FC<ChartProps> = ({ stockSeries, cryptoSeries, currencyCode = "USD", type, name, id = "candles", titleCandle = '', titleBar = 'Volume (Mil)', division = 1000, height = 350, width = "90%" }) => {
   const [seriesPolished, setSeriesPolished] = useState([
     name ? { name, data: [] as PolishedSeries} : { data: [] as PolishedSeries },
   ]);
-  const [options] = useState({
+  const [options, setOptions] = useState({
     chart: {
-      id: 'candles',
+      id,
       toolbar: {
         autoSelected: 'pan',
         show: true
       },
       zoom: {
-        enabled: false
+        enabled: id !== 'candles'
       },
       locales: [pt_BR],
       defaultLocale: 'pt-br'
+    },
+    title: {
+      text: titleCandle,
+      align: 'center',
+      offsetY: 16,
+      style: {
+        fontSize: '18px',
+        fontFamily: 'Roboto'
+      }
     },
     xaxis: {
       type: "datetime",
@@ -55,7 +70,7 @@ const Chart: React.FC<ChartProps> = ({ series, type, name = 'volume', titleBar =
       id: name,
       brush: {
         enabled: true,
-        target: 'candles',
+        target: id,
       },
       toolbar: {
         autoSelected: 'selection',
@@ -135,43 +150,104 @@ const Chart: React.FC<ChartProps> = ({ series, type, name = 'volume', titleBar =
   });
 
   function setData() {
+    if(stockSeries) {
+      getStockOHLCValues(stockSeries);
+    }
+
+    if(cryptoSeries) {
+      getCryptoOHLCValues(cryptoSeries);
+      setOptions(options => {
+        return {
+          ...options,
+          title: {
+            ...options.title,
+            text: titleCandle
+          }
+        }
+      });
+    }
+  }
+
+  function getStockOHLCValues(series: StockSeries) {
     const newTimeSeriesBar = [] as BarPolished;
-    if(series) {
-      const newTimeSeries = Object.entries(series).reduceRight((newTimeSeries, series) => {
-        const x = new Date(series[0]);
+    const isOfTypeBar = type === "bar";
+    const newTimeSeries = Object.entries(series).reduceRight((newTimeSeries, series) => {
+      const x = new Date(series[0]);
+
+      if(!isOfTypeBar) {
         newTimeSeries.push({
           x,
           y: [Number(series?.[1]?.['open']), Number(series?.[1]?.['high']), Number(series?.[1]?.['low']), Number(series?.[1]?.['close'])]
         });
-
+      } else {
         newTimeSeriesBar.push({
           x,
           y: Number(series?.[1]?.['volume'])
         });
-
-        return newTimeSeries
-      }, [] as CandleStickPolished);
-
-      const newSeries = seriesPolished
-      .filter(serie =>
-        !(serie?.data && Array.isArray(serie.data))
-      );
-
-      if(type === "bar") {
-        newSeries.push({ name, data: newTimeSeriesBar });
-      } else {
-        newSeries.push({ data: newTimeSeries });
       }
 
-      setSeriesPolished(newSeries)
+      return newTimeSeries
+    }, [] as CandleStickPolished);
+
+    const newSeries = seriesPolished
+    .filter(serie =>
+      !(serie?.data && Array.isArray(serie.data))
+    );
+
+    if(isOfTypeBar) {
+      newSeries.push({ name, data: newTimeSeriesBar });
+    } else {
+      newSeries.push({ data: newTimeSeries });
     }
+
+    setSeriesPolished(newSeries)
   }
 
-  useEffect(setData, [series])
+  function getCryptoOHLCValues(series: CryptoSeries) {
+    const newTimeSeriesBar = [] as BarPolished;
+    const isOfTypeBar = type === "bar";
+    const newTimeSeries = Object.entries(series).reduceRight((newTimeSeries, series) => {
+      const x = new Date(series[0]);
+
+      if(!isOfTypeBar) {
+        newTimeSeries.push({
+          x,
+          y: [
+            Number(series?.[1]?.[`open${currencyCode}`]),
+            Number(series?.[1]?.[`high${currencyCode}`]),
+            Number(series?.[1]?.[`low${currencyCode}`]),
+            Number(series?.[1]?.[`close${currencyCode}`])
+          ]
+        });
+      } else {
+        newTimeSeriesBar.push({
+          x,
+          y: Number(series?.[1]?.['volume'])
+        });
+      }
+
+      return newTimeSeries
+    }, [] as CandleStickPolished);
+
+    const newSeries = seriesPolished
+    .filter(serie =>
+      !(serie?.data && Array.isArray(serie.data))
+    );
+
+    if(isOfTypeBar) {
+      newSeries.push({ name, data: newTimeSeriesBar });
+    } else {
+      newSeries.push({ data: newTimeSeries });
+    }
+
+    setSeriesPolished(newSeries)
+  }
+
+  useEffect(setData, [stockSeries, cryptoSeries])
 
   return (
     <>
-      {series && (
+      {(stockSeries || cryptoSeries) && (
         (type === "candlestick" ? (
           <div className="chart-prices">
             <ApexChart.default type="candlestick" height={height} width={width} options={options} series={seriesPolished} />
