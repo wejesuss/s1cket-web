@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useHistory } from 'react-router';
 
 import Header from '../../components/Header';
-import Article from '../../components/Article';
+import StockArticle from '../../components/StockArticle';
+import CryptoArticle from '../../components/CryptoArticle';
 
 import { PolishedSearch } from '../../services/api-types';
 
 import './styles.css';
-import { useLocation, useHistory } from 'react-router';
+
+interface PolishedCrypto {
+  symbol: string;
+  name: string;
+  currency: string;
+  currencyName: string;
+};
 
 const Favorites: React.FC = () => {
   const history = useHistory()
   const urlparams = useLocation().search;
   const [params, setParams] = useState(urlparams)
-  const [favorites, setFavorites] = useState<PolishedSearch>([]);
+  const [favorites, setFavorites] = useState<PolishedSearch | PolishedCrypto[]>([]);
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
   useEffect(() => {
     const arrayOfParams = params.slice(1).split("&");
     const index = arrayOfParams.findIndex(params => params.slice(0, 6) === "search");
-    let param = 'stocks'
+    let param = "stocks"
     if(index !== -1) {
       param = arrayOfParams[index].split("=")[1]
     }
     setParams(param)
 
-    const favorites: PolishedSearch = JSON.parse(localStorage.getItem(`favorites-${param}`) || '[]')
+    const favorites: PolishedSearch | PolishedCrypto[] = JSON.parse(localStorage.getItem(`favorites-${param}`) || '[]');
     if(favorites.length < 1) {
       setIsResultsEmpty(true)
     } else {
@@ -34,14 +42,14 @@ const Favorites: React.FC = () => {
   // eslint-disable-next-line
   }, []);
 
-  function seriesAction(series: string, symbol: string) {
-    history.push(`/${params}`, { symbol, series })
+  function seriesAction(series: string, symbol: string, market?: string) {
+    history.push(`/${params}`, { symbol, series, market })
   }
 
   return (
     <>
       <Header name="favorites" activePage="Favorites" />
-      <div id="favorites">
+      <div id="favorites" className={params}>
         <main>
           {favorites.length > 0 && (
             <>
@@ -49,19 +57,34 @@ const Favorites: React.FC = () => {
                 Estes são os seus Favoritos
               </h1>
               <div className="results">
-                {favorites.map((result) => (
-                  <Article
-                    key={result.symbol}
-                    type={result.type}
-                    name={result.name}
-                    currency={result.currency}
-                    region={result.region}
-                    symbol={result.symbol}
-                    seriesActionIntraday={() => seriesAction("intraday", result.symbol)}
-                    seriesActionDaily={() => seriesAction("daily", result.symbol)}
-                    seriesActionWeekly={() => seriesAction("weekly", result.symbol)}
-                  />
-                ))}
+                {params === "stocks" ? (
+                  (favorites as PolishedSearch).map((result) => (
+                    <StockArticle
+                      key={result.symbol}
+                      type={result.type}
+                      name={result.name}
+                      currency={result.currency}
+                      region={result.region}
+                      symbol={result.symbol}
+                      seriesActionIntraday={() => seriesAction("intraday", result.symbol)}
+                      seriesActionDaily={() => seriesAction("daily", result.symbol)}
+                      seriesActionWeekly={() => seriesAction("weekly", result.symbol)}
+                    />
+                  ))
+                ) : (
+                  (favorites as PolishedCrypto[]).map(result => (
+                    <CryptoArticle
+                      key={result.symbol + result.currency}
+                      symbol={result.symbol}
+                      name={result.name}
+                      currency={result.currency}
+                      currencyName={result.currencyName}
+                      seriesActionDaily={() => seriesAction("daily", result.symbol, result.currency)}
+                      seriesActionWeekly={() => seriesAction("weekly", result.symbol, result.currency)}
+                      seriesActionMonthly={() => seriesAction("monthly", result.symbol, result.currency)}
+                    />
+                  ))
+                )}
               </div>
               <p className="results-end">Parece que chegamos ao fim!</p>
             </>
