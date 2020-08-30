@@ -27,6 +27,9 @@ const Stocks: React.FC = () => {
   const [isResultsEmpty, setIsResultsEmpty] = useState({ byName: false, bySymbol: false });
 
   async function searchBySymbol(symbol: string, series: string, interval: string, outputsize: string) {
+    if(!symbol || !series || !interval || !outputSize) {
+      return
+    }
     try {
       const results = await api.get<PolishedIntradayDailyAndWeekly>(
         `/prices/${series}/${symbol}`,
