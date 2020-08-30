@@ -166,8 +166,8 @@ const Stocks: React.FC = () => {
 
                   {resultsBySymbol && (
                     <div className="chart">
-                      <Chart series={resultsBySymbol.timeSeries} height={200} type="candlestick" />
-                      <Chart series={resultsBySymbol.timeSeries} type="bar" height={200} />
+                      <Chart stockSeries={resultsBySymbol.timeSeries} height={200} type="candlestick" />
+                      <Chart stockSeries={resultsBySymbol.timeSeries} type="bar" height={200} />
                     </div>
                   )}
                 </div>
