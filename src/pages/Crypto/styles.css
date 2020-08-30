@@ -1,19 +1,23 @@
-#stocks div[role="group"] {
+#crypto div[role="group"] {
   display: flex;
   align-items: center;
 }
 
-#stocks button {
+#crypto button {
   background: transparent;
   transition: .2s;
 }
 
-#stocks .input-block label.up,
-#stocks .select-block label.up {
-  bottom: 48px;
+#crypto .input-block input {
+  width: 19rem;
 }
 
-#stocks main {
+#crypto .input-block label.up,
+#crypto .select-block label.up {
+  bottom: 44px;
+}
+
+#crypto main {
   box-sizing: content-box;
   width: 90vw;
   max-width: 1100px;
@@ -21,7 +25,7 @@
   padding: 1.6rem 0;
 }
 
-#stocks main .results-title {
+#crypto main .results-title {
   font-weight: 300;
   font-size: 3.6rem;
   line-height: 4.2rem;
@@ -31,7 +35,7 @@
   margin-bottom: 8rem;
 }
 
-#stocks main .results {
+#crypto main .results {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 6.4rem 3.2rem;
@@ -39,8 +43,8 @@
   align-items: center;
 }
 
-#stocks main .results-end,
-#stocks main .no-results {
+#crypto main .results-end,
+#crypto main .no-results {
   font-weight: 300;
   font-size: 1.4rem;
   line-height: 1.6rem;
@@ -49,19 +53,20 @@
   margin-top: 14rem;
 }
 
-#stocks main .no-results {
+#crypto main .no-results {
   font-size: 1.6rem;
   margin: 0;
 }
 
-#stocks main table {
+#crypto main table {
+  position: relative;
   margin: 0 auto;
   border: 1px solid black;
   border-spacing: 16px 0px;
   text-align: center;
 }
 
-#stocks main table caption {
+#crypto main table caption {
   width: max-content;
   font-size: 1.4rem;
   margin: 0 auto;
@@ -69,7 +74,7 @@
   color: rgba(1,1,1, 0.7);
 }
 
-#stocks main table th {
+#crypto main table th {
   border-right: 1px solid;
   border-collapse: collapse;
   padding: 8px 16px;
@@ -77,8 +82,8 @@
   text-transform: uppercase;
 }
 
-#stocks main table th,
-#stocks main table td {
+#crypto main table th,
+#crypto main table td {
   font-weight: 500;
   font-size: 1.4rem;
   line-height: 1.6rem;
@@ -86,7 +91,7 @@
   color: rgba(0, 0, 0, .8);
 }
 
-#stocks main table td {
+#crypto main table td {
   border: 0;
   padding: 8px 0;
 
@@ -94,7 +99,13 @@
   color: rgba(0, 0, 0, .9);
 }
 
-#stocks .chart {
+#crypto main table .heart-icon {
+  position: absolute;
+  top: 10px;
+  right: -32px;
+}
+
+#crypto .chart {
   margin: 6.4rem auto 0;
 }
 
@@ -103,17 +114,17 @@
     font-size: 46%;
   }
 
-  #stocks label {
-    bottom: 48px;
+  #crypto label {
+    bottom: 44px;
   }
 
-  #stocks main .results {
+  #crypto main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   }
 }
 
 @media (max-width: 700px) {
-  #stocks div[role="group"] {
+  #crypto div[role="group"] {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
@@ -122,32 +133,28 @@
     width: 100vw;
   }
 
-  #stocks div[role="group"].symbol {
+  #crypto div[role="group"].symbol {
     max-height: 400px;
   }
 
-  #stocks main .results {
+  #crypto main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   }
 
-  #stocks .input-block input {
+  #crypto .input-block input {
     width: 100%;
   }
 
-  #stocks div[role="group"].symbol label.up {
+  #crypto div[role="group"].symbol label.up {
     bottom: 40px;
   }
 
-  #stocks div[role="group"].symbol label.up {
-    bottom: 40px;
-  }
-
-  #stocks div[role="group"].symbol .input-block,
-  #stocks div[role="group"].symbol .select-block {
+  #crypto div[role="group"].symbol .input-block,
+  #crypto div[role="group"].symbol .select-block {
     margin: 2rem 0;
   }
 
-  #stocks main .no-results {
+  #crypto main .no-results {
     font-size: 2rem;
   }
 }

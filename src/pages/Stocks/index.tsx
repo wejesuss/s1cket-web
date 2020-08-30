@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Chart from '../../components/Chart';
-import FormSearch from '../../components/FormSearch';
+import StockFormSearch from '../../components/StockFormSearch';
 import ArticleResult from '../../components/ArticleResult';
 
 import api from '../../services/api';
@@ -27,6 +27,9 @@ const Stocks: React.FC = () => {
   const [isResultsEmpty, setIsResultsEmpty] = useState({ byName: false, bySymbol: false });
 
   async function searchBySymbol(symbol: string, series: string, interval: string, outputsize: string) {
+    if(!symbol || !series || !interval || !outputSize) {
+      return
+    }
     try {
       const results = await api.get<PolishedIntradayDailyAndWeekly>(
         `/prices/${series}/${symbol}`,
@@ -81,7 +84,7 @@ const Stocks: React.FC = () => {
     <>
       <Header name="stocks" activePage="Stocks" hasFavorites />
       <div id="stocks">
-        <FormSearch
+        <StockFormSearch
           setType={setType}
           setSearch={setSearch}
           setSeries={setSeries}
@@ -163,8 +166,8 @@ const Stocks: React.FC = () => {
 
                   {resultsBySymbol && (
                     <div className="chart">
-                      <Chart series={resultsBySymbol.timeSeries} height={200} type="candlestick" />
-                      <Chart series={resultsBySymbol.timeSeries} type="bar" height={200} />
+                      <Chart stockSeries={resultsBySymbol.timeSeries} height={200} type="candlestick" />
+                      <Chart stockSeries={resultsBySymbol.timeSeries} type="bar" height={200} />
                     </div>
                   )}
                 </div>

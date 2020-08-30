@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Stocks from './pages/Stocks';
 import Favorites from './pages/Favorites';
+import Crypto from './pages/Crypto';
 
 const Routes: FC = () => {
   return (
@@ -14,6 +15,10 @@ const Routes: FC = () => {
 
       <Route path="/stocks">
         <Stocks />
+      </Route>
+
+      <Route path="/crypto">
+        <Crypto />
       </Route>
 
       <Route path="/favorites">

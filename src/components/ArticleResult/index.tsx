@@ -2,9 +2,9 @@ import React from 'react';
 
 import api from '../../services/api';
 import { PolishedIntradayDailyAndWeekly } from '../../services/api-types';
-import { IsResultsEmpty } from '../FormSearch';
+import { IsResultsEmpty } from '../StockFormSearch';
 import { waitTwoMinutes } from '../../Helpers';
-import Article from '../Article';
+import StockArticle from '../StockArticle';
 
 interface ArticleProps {
   setResultsBySymbol: React.Dispatch<React.SetStateAction<PolishedIntradayDailyAndWeekly | undefined>>;
@@ -79,7 +79,7 @@ const ArticleResult: React.FC<ArticleProps> = (
   }
 
   return (
-    <Article
+    <StockArticle
       type={type}
       currency={currency}
       name={name}

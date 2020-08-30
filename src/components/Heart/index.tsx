@@ -5,47 +5,45 @@ import heartFullIcon from '../../assets/heart-full.svg';
 import './styles.css';
 
 interface HeartProps {
+  action: 'stocks' | 'crypto';
   symbol: string;
-  currency: string;
   name: string;
-  region: string;
-  type: string;
+  currency: string;
+  currencyName?: string;
+  region?: string;
+  type?: string;
 }
 
 export interface FavoritesData {
   name: string;
   currency: string;
-  region: string;
-  type: string;
+  currencyName?: string;
+  region?: string;
+  type?: string;
 }
 
 export interface Favorites extends FavoritesData {
   symbol: string;
 }
 
-const Heart: React.FC<HeartProps> = ({ symbol, currency, name, region, type }) => {
-  const [isFavorited, setIsFavorited] = useState(false)
+const Heart: React.FC<HeartProps> = ({ action, symbol, currency, currencyName, name, region = "United States", type = "Equity" }) => {
+  const [isFavorited, setIsFavorited] = useState(false);
 
   function handleSetFavorites(
     symbol: string,
-    data: FavoritesData = { currency: '', name: '', region: '', type: '' }
+    data: FavoritesData
   ): boolean {
-    let dataIsInvalid = false;
-    const dataKeys = Object.keys(data);
-    if(dataKeys.length < 1) dataIsInvalid = true;
-    dataKeys.forEach((key) => {
-      if(!data[key as "currency" | "region" | "name" | 'type']) dataIsInvalid = true
-    });
-
-    if(dataIsInvalid) {
-      return false
-    }
-
     let wasRemoved = false;
-    let favorites = localStorage.getItem("favorites-stocks")
+    let favorites = localStorage.getItem(`favorites-${action}`)
     if(favorites) {
       let oldFavorites: Favorites[] = JSON.parse(favorites);
-      const index = oldFavorites.findIndex(favorited => favorited.symbol === symbol);
+      const index = oldFavorites.findIndex(favorited => {
+        if(currencyName && favorited.currencyName) {
+          return (favorited.symbol + favorited.currencyName) === (symbol + currencyName);
+        }
+
+        return favorited.symbol === symbol;
+      });
 
       if(index !== -1) {
         oldFavorites.splice(index, 1);
@@ -54,36 +52,54 @@ const Heart: React.FC<HeartProps> = ({ symbol, currency, name, region, type }) =
         oldFavorites.push({...data, symbol});
       }
 
-      localStorage.setItem("favorites-stocks", JSON.stringify(oldFavorites));
+      localStorage.setItem(`favorites-${action}`, JSON.stringify(oldFavorites));
     } else {
-      localStorage.setItem("favorites-stocks", JSON.stringify([{...data, symbol}]))
+      localStorage.setItem(`favorites-${action}`, JSON.stringify([{...data, symbol}]))
     }
 
     return wasRemoved;
   }
 
+  function handleToggleFavorites() {
+    let favoriteData: FavoritesData = {
+      currency,
+      name,
+      currencyName
+    }
+
+    if(action === "stocks") {
+      favoriteData = {
+        ...favoriteData,
+        region,
+        type
+      }
+    }
+
+    const wasRemoved = handleSetFavorites(symbol, favoriteData);
+    setIsFavorited(!wasRemoved)
+  }
+
   useEffect(() => {
-    const favorites: Favorites[] = JSON.parse(localStorage.getItem("favorites-stocks") || '[]')
-    const index = favorites.findIndex(favorite => favorite.symbol === symbol)
+    const favorites: Favorites[] = JSON.parse(localStorage.getItem(`favorites-${action}`) || '[]')
+    const index = favorites.findIndex(favorited => {
+      if(currencyName && favorited.currencyName) {
+        return (favorited.symbol + favorited.currency) === (symbol + currency);
+      }
+
+      return favorited.symbol === symbol;
+    })
 
     if(index !== -1) {
       setIsFavorited(true)
+    } else {
+      setIsFavorited(false)
     }
-  }, [symbol])
+  }, [symbol, action, currencyName, currency])
 
   return (
     <span
       className="favorite"
-      onClick={() => {
-        const wasRemoved = handleSetFavorites(symbol, {
-          currency,
-          name,
-          region,
-          type
-        });
-
-        setIsFavorited(!wasRemoved)
-      }}
+      onClick={handleToggleFavorites}
     >
       {isFavorited ? (
         <img src={heartFullIcon} alt="Favorited" />

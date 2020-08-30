@@ -51,15 +51,15 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                 Ações
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
-                to="/cripto"
-                className={activePage === 'Bitcoin' ? 'active' : ''}
+                to="/crypto"
+                className={activePage === 'Crypto' ? 'active' : ''}
               >
                 <img src={bitcoin} alt="Bitcoin" />
                 Cripto
               </Link>
-            </li> */}
+            </li>
           </ul>
           <div id="burger" onClick={handleToggleNavigatorState}>
             <i></i>
@@ -82,15 +82,15 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                     Ações
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link
-                    to="/cripto"
-                    className={activePage === 'Bitcoin' ? 'active' : ''}
+                    to="/crypto"
+                    className={activePage === 'Crypto' ? 'active' : ''}
                   >
                     <img src={bitcoin} alt="Bitcoin" />
                     Cripto
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </div>
           </div>

@@ -1,0 +1,70 @@
+form {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4.8rem;
+  margin-right: 3.2rem;
+}
+
+#legend {
+  font-size: 2.4rem;
+  color: #A664B0;
+  letter-spacing: 1px;
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+.select-block {
+  position: relative;
+}
+
+.input-block {
+  position: relative;
+}
+
+.input-block label,
+.select-block label {
+  user-select: none;
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+}
+
+.input-block label.up,
+.select-block label.up {
+  width: 100%;
+  text-align: center;
+  text-indent: 0;
+  user-select: initial;
+  bottom: 48px;
+}
+
+form button:hover {
+  transform: scale(1.1) rotate(20deg);
+}
+
+@media (min-width: 1024px) {
+  #cripto .input-block label {
+    bottom: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  form {
+    margin-right: 0;
+  }
+
+  #legend {
+    font-size: 3.2rem;
+  }
+
+  .input-block label,
+  .select-block label {
+    font-size: 2.4rem;
+    bottom: 8px;
+  }
+
+  button img {
+    width: 32px;
+    height: 32px;
+  }
+}

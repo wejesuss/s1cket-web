@@ -16,7 +16,7 @@ export interface IsResultsEmpty {
   bySymbol: boolean;
 }
 
-interface FormSearchProps {
+interface StocksFormSearchProps {
   setType: React.Dispatch<React.SetStateAction<string>>;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setSeries: React.Dispatch<React.SetStateAction<string>>;
@@ -33,7 +33,7 @@ interface FormSearchProps {
   searchBySymbol: Function;
 }
 
-const FormSearch: React.FC<FormSearchProps> = (
+const StocksFormSearch: React.FC<StocksFormSearchProps> = (
   { setIntervalTime,
     setOutputSize,
     setSearch,
@@ -51,6 +51,9 @@ const FormSearch: React.FC<FormSearchProps> = (
   }) => {
 
   async function searchByName(name: string) {
+    if(!name) {
+      return
+    }
     try {
       const results = await api.get<PolishedSearch>(`/search/${name}`);
 
@@ -135,4 +138,4 @@ const FormSearch: React.FC<FormSearchProps> = (
   );
 };
 
-export default FormSearch;
+export default StocksFormSearch;
