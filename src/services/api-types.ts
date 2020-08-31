@@ -65,7 +65,7 @@ export interface PolishedCryptoSeries {
 }
 
 export interface PolishedExchangeRate {
-  currencyExchangeRate: {
+  currencyExchangeRate?: {
       fromCurrencyCode: string;
       fromCurrencyName: string;
       toCurrencyCode: string;
@@ -76,6 +76,7 @@ export interface PolishedExchangeRate {
       bidPrice: string;
       askPrice: string;
   };
+  error?: string;
 }
 
 export interface GlobalQuoteResults {

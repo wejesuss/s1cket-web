@@ -5,12 +5,17 @@ import Home from './pages/Home';
 import Stocks from './pages/Stocks';
 import Favorites from './pages/Favorites';
 import Crypto from './pages/Crypto';
+import Exchange from './pages/Exchange';
 
 const Routes: FC = () => {
   return (
     <BrowserRouter>
       <Route exact path="/">
         <Home />
+      </Route>
+
+      <Route path="/exchange">
+        <Exchange />
       </Route>
 
       <Route path="/stocks">
