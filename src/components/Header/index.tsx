@@ -6,6 +6,7 @@ import logo from '../../assets/s1cket.svg';
 import bitcoin from '../../assets/bitcoin.svg';
 import home from '../../assets/home.svg';
 import wallet from '../../assets/wallet.svg';
+import currency from '../../assets/currency.svg';
 
 interface HeaderProps {
   name: string;
@@ -44,6 +45,15 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
             </li>
             <li>
               <Link
+                to="/exchange"
+                className={activePage === 'Exchange' ? 'active' : ''}
+              >
+                <img src={currency} alt="Currency" />
+                Câmbio
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/stocks"
                 className={activePage === 'Stocks' ? 'active' : ''}
               >
@@ -71,6 +81,15 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
                   <Link to="/" className={activePage === 'Home' ? 'active' : ''}>
                     <img src={home} alt="Home" />
                     Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/exchange"
+                    className={activePage === 'Exchange' ? 'active' : ''}
+                  >
+                    <img src={currency} alt="Currency" />
+                    Câmbio
                   </Link>
                 </li>
                 <li>
