@@ -74,11 +74,11 @@ const Exchange: React.FC = () => {
 
                   <div className="row">
                     <h5>Preço de venda: </h5>
-                    <h6>{exchangeRate.currencyExchangeRate.bidPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.bidPrice).toFixed(4) : "--"}</h6>
+                    <h6>{exchangeRate.currencyExchangeRate.askPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.askPrice).toFixed(2) : "--"}</h6>
                   </div>
                   <div className="row">
                     <h5>Preço de compra: </h5>
-                    <h6>{exchangeRate.currencyExchangeRate.askPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.askPrice).toFixed(4) : "--"}</h6>
+                    <h6>{exchangeRate.currencyExchangeRate.bidPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.bidPrice).toFixed(2) : "--"}</h6>
                   </div>
                 </div>
               </header>
