@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 import Header from '../../components/Header';
+import ExchangeFormSearch from '../../components/ExchangeFormSearch';
+import ExchangeArticle from '../../components/ExchangeArticle';
 
 import api from '../../services/api';
 import { PolishedExchangeRate } from '../../services/api-types';
 
 import './styles.css';
-import ExchangeFormSearch from '../../components/ExchangeFormSearch';
 
 const Exchange: React.FC = () => {
   const [from_currency, setFromCurrency] = useState('BTC');
@@ -46,7 +47,7 @@ const Exchange: React.FC = () => {
 
   return (
     <>
-      <Header name="exchange" activePage="Exchange" />
+      <Header name="exchange" activePage="Exchange" hasFavorites />
       <div id="exchange">
         <ExchangeFormSearch
           setFromCurrency={setFromCurrency}
@@ -57,37 +58,15 @@ const Exchange: React.FC = () => {
         />
         <main>
           {exchangeRate?.currencyExchangeRate && (
-            <article>
-              <header>
-                <h1>
-                  {exchangeRate.currencyExchangeRate.fromCurrencyName}
-                  <sup>{exchangeRate.currencyExchangeRate.fromCurrencyCode}</sup>
-                </h1>
-                <div className="info">
-                  <div className="row">
-                    <h5>Para: </h5>
-                    <h6>
-                      {exchangeRate.currencyExchangeRate.toCurrencyName}
-                      /{exchangeRate.currencyExchangeRate.toCurrencyCode}
-                    </h6>
-                  </div>
-
-                  <div className="row">
-                    <h5>Taxa de câmbio: </h5>
-                    <h6>{exchangeRate.currencyExchangeRate.exchangeRate !== "-" ? Number(exchangeRate.currencyExchangeRate.exchangeRate).toFixed(2) : "--"}</h6>
-                  </div>
-
-                  <div className="row">
-                    <h5>Preço de venda: </h5>
-                    <h6>{exchangeRate.currencyExchangeRate.askPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.askPrice).toFixed(2) : "--"}</h6>
-                  </div>
-                  <div className="row">
-                    <h5>Preço de compra: </h5>
-                    <h6>{exchangeRate.currencyExchangeRate.bidPrice !== "-" ? Number(exchangeRate.currencyExchangeRate.bidPrice).toFixed(2) : "--"}</h6>
-                  </div>
-                </div>
-              </header>
-            </article>
+            <ExchangeArticle
+              fromCurrencyCode={exchangeRate.currencyExchangeRate.fromCurrencyCode}
+              fromCurrencyName={exchangeRate.currencyExchangeRate.fromCurrencyName}
+              toCurrencyCode={exchangeRate.currencyExchangeRate.toCurrencyCode}
+              toCurrencyName={exchangeRate.currencyExchangeRate.toCurrencyName}
+              exchangeRate={exchangeRate.currencyExchangeRate.exchangeRate}
+              bidPrice={exchangeRate.currencyExchangeRate.bidPrice}
+              askPrice={exchangeRate.currencyExchangeRate.askPrice}
+            />
           )}
 
           {isResultsEmpty ? (
