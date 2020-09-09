@@ -24,13 +24,7 @@ const Favorites: React.FC = () => {
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
   useEffect(() => {
-    const arrayOfParams = params.slice(1).split("&");
-    const index = arrayOfParams.findIndex(params => params.slice(0, 6) === "search");
-    let param = "stocks"
-    if(index !== -1) {
-      param = arrayOfParams[index].split("=")[1]
-    }
-    setParams(param)
+    const param = getFavoriteQueryParam(params);
 
     const favorites: PolishedSearch | PolishedCrypto[] = JSON.parse(localStorage.getItem(`favorites-${param}`) || '[]');
     if(favorites.length < 1) {
