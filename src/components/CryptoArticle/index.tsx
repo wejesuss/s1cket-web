@@ -25,7 +25,7 @@ const CryptoArticle: React.FC<ArticleProps> = (
   }) => {
 
   return (
-    <article>
+    <article className="crypto">
       <header>
         <Heart
           action="crypto"

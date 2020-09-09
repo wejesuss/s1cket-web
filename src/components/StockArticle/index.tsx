@@ -27,7 +27,7 @@ const Article: React.FC<ArticleProps> = (
   }) => {
 
   return (
-    <article>
+    <article className="stocks">
       <header>
         <Heart
           action="stocks"

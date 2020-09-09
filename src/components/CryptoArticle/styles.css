@@ -1,7 +1,10 @@
 
-article {
+article.crypto {
   box-sizing: content-box;
   width: 90%;
+  max-width: 350px;
+  height: 14rem;
+  max-height: 140px;
   padding: 1.6rem;
 
   display: flex;
@@ -15,13 +18,7 @@ article {
   border: 1px solid #e8e8e8d9;
 }
 
-.crypto article {
-  max-width: 350px;
-  height: 15rem;
-  max-height: 150px;
-}
-
-article h1 {
+article.crypto h1 {
   font-weight: 500;
   font-size: 1.7rem;
   text-align: center;
@@ -29,7 +26,7 @@ article h1 {
   color: #8950D2;
 }
 
-article sup {
+article.crypto sup {
   font-style: normal;
   font-weight: 400;
   font-size: 1.1rem;
@@ -37,14 +34,14 @@ article sup {
   color: #A880DC;
 }
 
-article .info {
+article.crypto .info {
   display: flex;
   flex-direction: column;
   align-content: center;
   margin: 2rem 0;
 }
 
-article .info .row {
+article.crypto .info .row {
   width: 80%;
   margin: 0 auto;
   display: flex;
@@ -52,7 +49,7 @@ article .info .row {
   justify-content: space-between;
 }
 
-article .info h5 {
+article.crypto .info h5 {
   font-weight: normal;
   font-size: 1.4rem;
   line-height: 2.4rem;
@@ -61,21 +58,21 @@ article .info h5 {
   text-align: left;
 }
 
-.crypto article .info h5 {
+article.crypto .info h5 {
   width: 40%
 }
 
-article .info .prices {
-  margin-top: 0.8rem;
+article.crypto .info .row.prices {
+  margin-top: 1.6rem;
 }
 
-article .info .prices h5 {
+article.crypto .info .prices h5 {
   width: 100%;
   text-align: center;
   line-height: normal;
 }
 
-article .info h6 {
+article.crypto .info h6 {
   font-weight: normal;
   font-size: 1.5rem;
   line-height: 2.4rem;
@@ -84,15 +81,15 @@ article .info h6 {
   text-align: left;
 }
 
-.crypto article .info h6 {
+article.crypto .info h6 {
   width: 60%
 }
 
-article .info h6 sup {
+article.crypto .info h6 sup {
   margin-left: .8rem;
 }
 
-article footer {
+article.crypto footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -102,7 +99,7 @@ article footer {
   margin: 0 auto;
 }
 
-article footer button {
+article.crypto footer button {
   box-sizing: content-box;
   width: 8rem;
   height: 2rem;
@@ -122,36 +119,36 @@ article footer button {
   transition: .2s;
 }
 
-article footer button:hover {
+article.crypto footer button:hover {
   color: #ae3fbe;
   border: 1px solid #6b1277;
 }
 
 
 @media (max-width: 700px) {
-  article {
-    height: 20rem;
+  article.crypto {
+    height: 17rem;
   }
 
-  article h1 {
+  article.crypto h1 {
     font-size: 1.8rem;
   }
 
-  article sup {
+  article.crypto sup {
     font-size: 1.2rem;
   }
 
-  article .info h5 {
+  article.crypto .info h5 {
     font-size: 1.6rem;
     line-height: 3.2rem;
   }
 
-  article .info h6 {
+  article.crypto .info h6 {
     font-size: 1.8rem;
     line-height: 3.2rem;
   }
 
-  article footer button {
+  article.crypto footer button {
     width: 9rem;
     height: 2.4rem;
     font-size: 1.6rem;
