@@ -1,5 +1,5 @@
 
-article {
+article.stocks {
   box-sizing: content-box;
   width: 90%;
   max-width: 370px;
@@ -18,7 +18,7 @@ article {
   border: 1px solid #e8e8e8d9;
 }
 
-article h1 {
+article.stocks h1 {
   font-weight: 500;
   font-size: 1.7rem;
   text-align: center;
@@ -26,7 +26,7 @@ article h1 {
   color: #8950D2;
 }
 
-article sup {
+article.stocks sup {
   font-style: normal;
   font-weight: 400;
   font-size: 1.1rem;
@@ -34,14 +34,14 @@ article sup {
   color: #A880DC;
 }
 
-article .info {
+article.stocks .info {
   display: flex;
   flex-direction: column;
   align-content: center;
   margin: 2rem 0;
 }
 
-article .info .row {
+article.stocks .info .row {
   width: 80%;
   margin: 0 auto;
   display: flex;
@@ -49,7 +49,7 @@ article .info .row {
   justify-content: space-between;
 }
 
-article .info h5 {
+article.stocks .info h5 {
   font-weight: normal;
   font-size: 1.4rem;
   line-height: 2.4rem;
@@ -58,17 +58,17 @@ article .info h5 {
   text-align: left;
 }
 
-article .info .prices {
+article.stocks .info .prices {
   margin-top: 0.8rem;
 }
 
-article .info .prices h5 {
+article.stocks .info .prices h5 {
   width: 100%;
   text-align: center;
   line-height: normal;
 }
 
-article .info h6 {
+article.stocks .info h6 {
   font-weight: normal;
   font-size: 1.5rem;
   line-height: 2.4rem;
@@ -77,11 +77,11 @@ article .info h6 {
   text-align: left;
 }
 
-article .info h6 sup {
+article.stocks .info h6 sup {
   margin-left: .8rem;
 }
 
-article footer {
+article.stocks footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,7 +91,7 @@ article footer {
   margin: 0 auto;
 }
 
-article footer button {
+article.stocks footer button {
   box-sizing: content-box;
   width: 8rem;
   height: 2rem;
@@ -111,36 +111,36 @@ article footer button {
   transition: .2s;
 }
 
-article footer button:hover {
+article.stocks footer button:hover {
   color: #ae3fbe;
   border: 1px solid #6b1277;
 }
 
 
 @media (max-width: 700px) {
-  article {
+  article.stocks.stocks {
     height: 20rem;
   }
 
-  article h1 {
+  article.stocks h1 {
     font-size: 1.8rem;
   }
 
-  article sup {
+  article.stocks sup {
     font-size: 1.2rem;
   }
 
-  article .info h5 {
+  article.stocks .info h5 {
     font-size: 1.6rem;
     line-height: 3.2rem;
   }
 
-  article .info h6 {
+  article.stocks .info h6 {
     font-size: 1.8rem;
     line-height: 3.2rem;
   }
 
-  article footer button {
+  article.stocks footer button {
     width: 9rem;
     height: 2.4rem;
     font-size: 1.6rem;

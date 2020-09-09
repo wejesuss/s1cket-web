@@ -25,14 +25,17 @@ const CryptoArticle: React.FC<ArticleProps> = (
   }) => {
 
   return (
-    <article>
+    <article className="crypto">
       <header>
         <Heart
           action="crypto"
-          symbol={symbol}
-          currency={currency}
-          currencyName={currencyName}
-          name={name}
+          cryptoData={{
+            id: (symbol + currency).toUpperCase(),
+            symbol,
+            currency,
+            currencyName,
+            name
+          }}
         />
         <h1>
           {name} <sup>{symbol}</sup>
