@@ -31,11 +31,14 @@ const Article: React.FC<ArticleProps> = (
       <header>
         <Heart
           action="stocks"
-          currency={currency}
-          name={name}
-          region={region}
-          symbol={symbol}
-          type={type}
+          stocksData={{
+            id: symbol.toUpperCase(),
+            currency,
+            name,
+            region,
+            symbol,
+            type
+          }}
         />
         <h1>
           {name} <sup>{symbol}</sup>

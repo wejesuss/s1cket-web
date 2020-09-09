@@ -102,10 +102,16 @@ const Crypto: React.FC = () => {
                       <td>
                         <Heart
                           action="crypto"
-                          symbol={resultsBySymbol.data.digitalCurrencyCode}
-                          name={resultsBySymbol.data.digitalCurrencyName}
-                          currency={resultsBySymbol.data.marketCode}
-                          currencyName={resultsBySymbol.data.marketName}
+                          cryptoData={{
+                            id: (
+                              resultsBySymbol.data.digitalCurrencyCode +
+                              resultsBySymbol.data.marketCode
+                            ).toUpperCase(),
+                            symbol: resultsBySymbol.data.digitalCurrencyCode,
+                            name: resultsBySymbol.data.digitalCurrencyName,
+                            currency: resultsBySymbol.data.marketCode,
+                            currencyName: resultsBySymbol.data.marketName
+                          }}
                         />
                       </td>
                     </tr>
