@@ -1,4 +1,4 @@
-article header span {
+article header span.favorite {
   position: absolute;
   right: -24px;
   top: -12px;

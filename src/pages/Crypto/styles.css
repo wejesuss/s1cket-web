@@ -121,6 +121,13 @@
   #crypto main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   }
+
+  #crypto main table .heart-icon {
+    top: 0;
+  }
+}
+
+@media (max-width: 900px) {
 }
 
 @media (max-width: 700px) {
@@ -139,6 +146,10 @@
 
   #crypto main .results {
     grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+  }
+
+  #crypto main table .heart-icon {
+    top: 0;
   }
 
   #crypto .input-block input {
