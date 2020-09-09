@@ -14,11 +14,11 @@ import './styles.css';
 
 const Crypto: React.FC = () => {
   const history = useHistory()
-  const [search, setSearch] = useState('');
-  const [market, setMarket] = useState('BRL');
+  const [search, setSearch] = useState('BTC');
+  const [market, setMarket] = useState('USD');
   const [series, setSeries] = useState('daily');
   const [resultsBySymbol, setResultsBySymbol] = useState<PolishedCryptoSeries>();
-  const [code, setCode] = useState('BRL')
+  const [code, setCode] = useState('USD')
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
   async function searchBySymbol(symbol: string, series: string, market: string) {
@@ -36,7 +36,7 @@ const Crypto: React.FC = () => {
         },
       );
 
-      setCode(results.data.data?.marketCode.toUpperCase() || 'BRL')
+      setCode(results.data.data?.marketCode.toUpperCase() || 'USD')
       setResultsBySymbol(results.data);
 
       if (results.data.error) {
