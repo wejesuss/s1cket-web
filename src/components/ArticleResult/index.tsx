@@ -2,27 +2,11 @@ import React from 'react';
 
 import api from '../../services/api';
 import { PolishedIntradayDailyAndWeekly } from '../../services/api-types';
-import { IsResultsEmpty } from '../StockFormSearch';
 import { waitTwoMinutes } from '../../Helpers';
 import StockArticle from '../StockArticle';
+import { StocksArticleProps } from '../../@types';
 
-interface ArticleProps {
-  setResultsBySymbol: React.Dispatch<React.SetStateAction<PolishedIntradayDailyAndWeekly | undefined>>;
-  setIsResultsEmpty: React.Dispatch<React.SetStateAction<IsResultsEmpty>>;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setType: React.Dispatch<React.SetStateAction<string>>;
-  symbol: string;
-  currency: string;
-  name: string;
-  region: string;
-  type: string;
-  intervalTime: string;
-  outputSize: string;
-  isResultsEmpty: IsResultsEmpty;
-}
-
-const ArticleResult: React.FC<ArticleProps> = (
+const ArticleResult: React.FC<StocksArticleProps> = (
   { setIsResultsEmpty,
     setResultsBySymbol,
     setSearch,

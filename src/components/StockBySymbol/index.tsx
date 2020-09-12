@@ -1,15 +1,7 @@
 import React from 'react';
+import { StockBySymbolProps } from '../../@types';
 
 import Select from '../../components/Select';
-
-interface StockBySymbolProps {
-  series: string;
-  intervalTime: string;
-  outputSize: string;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setIntervalTime: React.Dispatch<React.SetStateAction<string>>;
-  setOutputSize: React.Dispatch<React.SetStateAction<string>>;
-}
 
 const StockBySymbol: React.FC<StockBySymbolProps> = (
   { intervalTime,
