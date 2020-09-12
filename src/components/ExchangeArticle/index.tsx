@@ -1,21 +1,11 @@
 import React from 'react';
+import { ExchangeArticleProps } from '../../@types';
 
 import Heart from '../Heart';
 
 import './styles.css';
 
-interface ArticleProps {
-  fromCurrencyCode: string;
-  fromCurrencyName: string;
-  toCurrencyCode: string;
-  toCurrencyName: string;
-  exchangeRate: string;
-  bidPrice: string;
-  askPrice: string;
-  updateExchangeRate?: Function;
-};
-
-const ExchangeArticle: React.FC<ArticleProps> = (
+const ExchangeArticle: React.FC<ExchangeArticleProps> = (
   { fromCurrencyCode,
     fromCurrencyName,
     toCurrencyCode,
