@@ -1,21 +1,11 @@
 import React from 'react';
+import { StockArticleProps } from '../../@types';
 
 import Heart from '../Heart';
 
 import './styles.css';
 
-interface ArticleProps {
-  symbol: string;
-  currency: string;
-  name: string;
-  region: string;
-  type: string;
-  seriesActionIntraday: Function;
-  seriesActionDaily: Function;
-  seriesActionWeekly: Function;
-}
-
-const Article: React.FC<ArticleProps> = (
+const StockArticle: React.FC<StockArticleProps> = (
   { symbol,
     currency,
     name,
@@ -84,4 +74,4 @@ const Article: React.FC<ArticleProps> = (
   );
 };
 
-export default Article;
+export default StockArticle;

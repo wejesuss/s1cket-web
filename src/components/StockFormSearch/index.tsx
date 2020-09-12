@@ -6,32 +6,11 @@ import StockBySymbol from '../StockBySymbol';
 
 import api from '../../services/api';
 import { PolishedSearch } from '../../services/api-types';
+import { StocksFormSearchProps } from '../../@types';
 
 import searchIcon from '../../assets/search.svg';
 import { waitTwoMinutes } from '../../Helpers';
 import './styles.css';
-
-export interface IsResultsEmpty {
-  byName: boolean;
-  bySymbol: boolean;
-}
-
-interface StocksFormSearchProps {
-  setType: React.Dispatch<React.SetStateAction<string>>;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setIntervalTime: React.Dispatch<React.SetStateAction<string>>;
-  setOutputSize: React.Dispatch<React.SetStateAction<string>>;
-  setResultsByName: React.Dispatch<React.SetStateAction<PolishedSearch>>;
-  setIsResultsEmpty: React.Dispatch<React.SetStateAction<IsResultsEmpty>>;
-  type: string;
-  search: string;
-  series: string;
-  intervalTime: string;
-  outputSize: string;
-  isResultsEmpty: IsResultsEmpty;
-  searchBySymbol: Function;
-}
 
 const StocksFormSearch: React.FC<StocksFormSearchProps> = (
   { setIntervalTime,

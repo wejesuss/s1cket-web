@@ -1,36 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as ApexChart from 'react-apexcharts';
 import pt_BR from "apexcharts/dist/locales/pt-br.json";
-
-import { PolishedInformations, PolishedCryptoSeriesData } from '../../services/api-types';
-
-type CandleStickPolished = {
-  x: Date;
-  y: number[];
-}[]
-
-type BarPolished = {
-  x: Date;
-  y: number;
-}[]
-
-type PolishedSeries = CandleStickPolished | BarPolished;
-type CryptoSeries = Record<string, PolishedCryptoSeriesData | undefined>;
-type StockSeries = Record<string, Record<PolishedInformations, string> | undefined>;
-
-interface ChartProps {
-  stockSeries?: StockSeries;
-  cryptoSeries?: CryptoSeries;
-  currencyCode?: string;
-  type: "bar" | "candlestick";
-  name?: string;
-  id?: string;
-  titleBar?: string;
-  titleCandle?: string;
-  division?: number;
-  height?: number | string;
-  width?: number | string;
-}
+import { BarPolished, CandleStickPolished, ChartProps, CryptoSeries, PolishedSeries, StockSeries } from '../../@types';
 
 const Chart: React.FC<ChartProps> = ({ stockSeries, cryptoSeries, currencyCode = "USD", type, name, id = "candles", titleCandle = '', titleBar = 'Volume (Mil)', division = 1000, height = 350, width = "90%" }) => {
   const [seriesPolished, setSeriesPolished] = useState([

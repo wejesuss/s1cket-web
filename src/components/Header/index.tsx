@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { HeaderProps } from '../../@types';
+
 import logo from '../../assets/s1cket.svg';
 import bitcoin from '../../assets/bitcoin.svg';
 import home from '../../assets/home.svg';
@@ -8,13 +10,6 @@ import wallet from '../../assets/wallet.svg';
 import currency from '../../assets/currency.svg';
 import './styles.css';
 
-interface HeaderProps {
-  name: string;
-  activePage: string;
-  hasFavorites?: boolean;
-}
-
-// eslint-disable-next-line react/prop-types
 const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
   const [opened, setOpened] = useState(false)
 
