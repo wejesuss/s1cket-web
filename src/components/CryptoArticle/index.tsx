@@ -1,20 +1,11 @@
 import React from 'react';
+import { CryptoArticleProps } from '../../@types';
 
 import Heart from '../Heart';
 
 import './styles.css';
 
-interface ArticleProps {
-  symbol: string;
-  name: string;
-  currency: string;
-  currencyName: string;
-  seriesActionDaily: Function;
-  seriesActionWeekly: Function;
-  seriesActionMonthly: Function;
-}
-
-const CryptoArticle: React.FC<ArticleProps> = (
+const CryptoArticle: React.FC<CryptoArticleProps> = (
   { symbol,
     name,
     currency,

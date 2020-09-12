@@ -9,52 +9,20 @@ import ExchangeArticle from '../../components/ExchangeArticle';
 import { getFavoriteQueryParam, waitTwoMinutes } from '../../Helpers';
 import api from '../../services/api';
 import { PolishedExchangeRate } from '../../services/api-types';
+import { CryptoProps, ExchangeProps, StocksProps, Favorites as IFavorites } from '../../@types';
 
 import './styles.css';
-
-interface Search {
-  id: string;
-  symbol: string;
-  type: string;
-  name: string;
-  currency: string;
-  region: string;
-};
-
-interface Crypto {
-  id: string;
-  symbol: string;
-  name: string;
-  currency: string;
-  currencyName: string;
-};
-
-interface ExchangeRate {
-  id: string;
-  fromCurrencyCode: string;
-  fromCurrencyName: string;
-  toCurrencyCode: string;
-  toCurrencyName: string;
-  exchangeRate: string;
-  bidPrice: string;
-  askPrice: string;
-};
-
-type Searches = Search[];
-type Cryptos = Crypto[];
-type ExchangeRates = ExchangeRate[];
-type Favorites = Searches | Cryptos | ExchangeRates;
 
 const Favorites: React.FC = () => {
   const history = useHistory();
   const [params, setParams] = useState(history.location.search);
-  const [favorites, setFavorites] = useState<Favorites>([]);
+  const [favorites, setFavorites] = useState<IFavorites>([]);
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
   useEffect(() => {
     const param = getFavoriteQueryParam(params);
 
-    let favorites: Favorites = JSON.parse(localStorage.getItem(`favorites-${param}`) || '[]');
+    let favorites: IFavorites = JSON.parse(localStorage.getItem(`favorites-${param}`) || '[]');
     if(favorites.length < 1) {
       setIsResultsEmpty(true)
     } else {
@@ -82,7 +50,7 @@ const Favorites: React.FC = () => {
         },
       );
 
-      const newFavorites = (favorites as ExchangeRates).map((oldFavorite) => {
+      const newFavorites = (favorites as ExchangeProps[]).map((oldFavorite) => {
         if(oldFavorite.id === id) {
           return {
             ...oldFavorite,
@@ -119,7 +87,7 @@ const Favorites: React.FC = () => {
                 Estes são os seus Favoritos
               </h1>
               <div className="results">
-                {params === "stocks" && (favorites as Searches).map((result) => (
+                {params === "stocks" && (favorites as StocksProps[]).map((result) => (
                   <StockArticle
                     key={result.id}
                     type={result.type}
@@ -133,7 +101,7 @@ const Favorites: React.FC = () => {
                   />
                 ))}
 
-                {params === "crypto" && (favorites as Cryptos).map(result => (
+                {params === "crypto" && (favorites as CryptoProps[]).map(result => (
                   <CryptoArticle
                     key={result.id}
                     symbol={result.symbol}
@@ -146,7 +114,7 @@ const Favorites: React.FC = () => {
                   />
                 ))}
 
-                {params === "exchange" && (favorites as ExchangeRates).map(result => (
+                {params === "exchange" && (favorites as ExchangeProps[]).map(result => (
                   <ExchangeArticle
                     key={result.id}
                     fromCurrencyCode={result.fromCurrencyCode}

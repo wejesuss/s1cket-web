@@ -1,51 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+import { Favorites, FavoritesData, HeartProps } from '../../@types';
+
 import heartIcon from '../../assets/heart.svg';
 import heartFullIcon from '../../assets/heart-full.svg';
 import './styles.css';
-
-interface StocksProps {
-  id: string;
-  currency: string;
-  name: string;
-  region: string;
-  symbol: string;
-  type: string;
-};
-
-interface CryptoProps {
-  id: string;
-  symbol: string;
-  name: string;
-  currency: string;
-  currencyName: string;
-};
-
-interface ExchangeProps {
-  id: string;
-  fromCurrencyCode: string;
-  fromCurrencyName: string;
-  toCurrencyCode: string;
-  toCurrencyName: string;
-  exchangeRate: string;
-  bidPrice: string;
-  askPrice: string;
-};
-
-interface HeartProps {
-  action: "stocks" | "crypto" | "exchange";
-  stocksData?: StocksProps;
-  cryptoData?: CryptoProps;
-  exchangeData?: ExchangeProps;
-}
-
-export type FavoritesData = StocksProps |CryptoProps | ExchangeProps;
-
-type Mapped<T> = {
-  [P in keyof T]: T[P]
-}[]
-
-export type Favorites = Mapped<FavoritesData>
 
 const Heart: React.FC<HeartProps> = (
   { action,

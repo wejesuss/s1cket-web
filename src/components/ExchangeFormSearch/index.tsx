@@ -5,16 +5,10 @@ import Input from '../Input';
 import { waitTwoMinutes } from '../../Helpers';
 import {digital, physical} from '../../services/currencies.json';
 
+import { ExchangeFormSearchProps } from '../../@types';
+
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
-
-interface ExchangeFormSearchProps {
-  setFromCurrency: React.Dispatch<React.SetStateAction<string>>;
-  setToCurrency: React.Dispatch<React.SetStateAction<string>>;
-  from_currency: string;
-  to_currency: string;
-  searchExchangeRate: Function;
-}
 
 const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = (
   { setFromCurrency,
