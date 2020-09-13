@@ -9,7 +9,7 @@ import { PolishedSearch } from '../../services/api-types';
 import { StocksFormSearchProps } from '../../@types';
 
 import searchIcon from '../../assets/search.svg';
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 import './styles.css';
 
 const StocksFormSearch: React.FC<StocksFormSearchProps> = ({

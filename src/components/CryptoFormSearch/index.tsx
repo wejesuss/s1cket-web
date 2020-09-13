@@ -3,7 +3,7 @@ import React, { FormEvent } from 'react';
 import Input from '../Input';
 import Select from '../Select';
 
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 import currencies from '../../services/currencies.json';
 
 import { CryptoFormSearchProps } from '../../@types';

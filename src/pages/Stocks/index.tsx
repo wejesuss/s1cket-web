@@ -15,7 +15,7 @@ import {
 } from '../../services/api-types';
 
 import './styles.css';
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 
 const Stocks: React.FC = () => {
   const history = useHistory();

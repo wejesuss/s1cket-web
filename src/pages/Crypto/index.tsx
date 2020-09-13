@@ -9,7 +9,7 @@ import CryptoFormSearch from '../../components/CryptoFormSearch';
 
 import api from '../../services/api';
 import { PolishedCryptoSeries } from '../../services/api-types';
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 
 import './styles.css';
 

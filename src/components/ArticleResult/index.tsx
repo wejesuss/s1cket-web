@@ -3,7 +3,7 @@ import React from 'react';
 
 import api from '../../services/api';
 import { PolishedIntradayDailyAndWeekly } from '../../services/api-types';
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 import StockArticle from '../StockArticle';
 import { StocksArticleProps } from '../../@types';
 

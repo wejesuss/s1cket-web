@@ -3,7 +3,7 @@ import React, { FormEvent, useState, useEffect } from 'react';
 
 import Input from '../Input';
 
-import { waitTwoMinutes } from '../../Helpers';
+import { waitTwoMinutes } from '../../helpers';
 import { digital, physical } from '../../services/currencies.json';
 
 import { ExchangeFormSearchProps } from '../../@types';

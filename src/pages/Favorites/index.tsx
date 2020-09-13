@@ -7,7 +7,7 @@ import StockArticle from '../../components/StockArticle';
 import CryptoArticle from '../../components/CryptoArticle';
 import ExchangeArticle from '../../components/ExchangeArticle';
 
-import { getFavoriteQueryParam, waitTwoMinutes } from '../../Helpers';
+import { getFavoriteQueryParam, waitTwoMinutes } from '../../helpers';
 import api from '../../services/api';
 import { PolishedExchangeRate } from '../../services/api-types';
 import {
