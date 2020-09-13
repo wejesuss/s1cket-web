@@ -1,11 +1,18 @@
-import { InputHTMLAttributes, SelectHTMLAttributes } from "react";
-import { PolishedCryptoSeriesData, PolishedInformations, PolishedIntradayDailyAndWeekly, PolishedSearch } from "../services/api-types";
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/ban-types */
+import { InputHTMLAttributes, SelectHTMLAttributes } from 'react';
+import {
+  PolishedCryptoSeriesData,
+  PolishedInformations,
+  PolishedIntradayDailyAndWeekly,
+  PolishedSearch,
+} from '../services/api-types';
 
 export interface HeaderProps {
   name: string;
   activePage: string;
   hasFavorites?: boolean;
-};
+}
 
 export interface StockBySymbolProps {
   series: string;
@@ -14,7 +21,7 @@ export interface StockBySymbolProps {
   setSeries: React.Dispatch<React.SetStateAction<string>>;
   setIntervalTime: React.Dispatch<React.SetStateAction<string>>;
   setOutputSize: React.Dispatch<React.SetStateAction<string>>;
-};
+}
 
 export interface StockArticleProps {
   symbol: string;
@@ -25,10 +32,12 @@ export interface StockArticleProps {
   seriesActionIntraday: Function;
   seriesActionDaily: Function;
   seriesActionWeekly: Function;
-};
+}
 
 export interface StocksArticleProps {
-  setResultsBySymbol: React.Dispatch<React.SetStateAction<PolishedIntradayDailyAndWeekly | undefined>>;
+  setResultsBySymbol: React.Dispatch<
+    React.SetStateAction<PolishedIntradayDailyAndWeekly | undefined>
+  >;
   setIsResultsEmpty: React.Dispatch<React.SetStateAction<IsResultsEmpty>>;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setSeries: React.Dispatch<React.SetStateAction<string>>;
@@ -41,7 +50,7 @@ export interface StocksArticleProps {
   intervalTime: string;
   outputSize: string;
   isResultsEmpty: IsResultsEmpty;
-};
+}
 
 export interface CryptoArticleProps {
   symbol: string;
@@ -51,7 +60,7 @@ export interface CryptoArticleProps {
   seriesActionDaily: Function;
   seriesActionWeekly: Function;
   seriesActionMonthly: Function;
-};
+}
 
 export interface ExchangeArticleProps {
   fromCurrencyCode: string;
@@ -62,12 +71,12 @@ export interface ExchangeArticleProps {
   bidPrice: string;
   askPrice: string;
   updateExchangeRate?: Function;
-};
+}
 
 export interface IsResultsEmpty {
   byName: boolean;
   bySymbol: boolean;
-};
+}
 
 export interface StocksFormSearchProps {
   setType: React.Dispatch<React.SetStateAction<string>>;
@@ -84,7 +93,7 @@ export interface StocksFormSearchProps {
   outputSize: string;
   isResultsEmpty: IsResultsEmpty;
   searchBySymbol: Function;
-};
+}
 
 export interface CryptoFormSearchProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -94,7 +103,7 @@ export interface CryptoFormSearchProps {
   market: string;
   series: string;
   searchBySymbol: Function;
-};
+}
 
 export interface ExchangeFormSearchProps {
   setFromCurrency: React.Dispatch<React.SetStateAction<string>>;
@@ -102,7 +111,7 @@ export interface ExchangeFormSearchProps {
   from_currency: string;
   to_currency: string;
   searchExchangeRate: Function;
-};
+}
 
 export type CandleStickPolished = {
   x: Date;
@@ -116,13 +125,16 @@ export type BarPolished = {
 
 export type PolishedSeries = CandleStickPolished | BarPolished;
 export type CryptoSeries = Record<string, PolishedCryptoSeriesData | undefined>;
-export type StockSeries = Record<string, Record<PolishedInformations, string> | undefined>;
+export type StockSeries = Record<
+  string,
+  Record<PolishedInformations, string> | undefined
+>;
 
 export interface ChartProps {
   stockSeries?: StockSeries;
   cryptoSeries?: CryptoSeries;
   currencyCode?: string;
-  type: "bar" | "candlestick";
+  type: 'bar' | 'candlestick';
   name?: string;
   id?: string;
   titleBar?: string;
@@ -130,7 +142,7 @@ export interface ChartProps {
   division?: number;
   height?: number | string;
   width?: number | string;
-};
+}
 
 export interface StocksProps {
   id: string;
@@ -139,7 +151,7 @@ export interface StocksProps {
   region: string;
   symbol: string;
   type: string;
-};
+}
 
 export interface CryptoProps {
   id: string;
@@ -147,7 +159,7 @@ export interface CryptoProps {
   name: string;
   currency: string;
   currencyName: string;
-};
+}
 
 export interface ExchangeProps {
   id: string;
@@ -158,19 +170,19 @@ export interface ExchangeProps {
   exchangeRate: string;
   bidPrice: string;
   askPrice: string;
-};
+}
 
 export interface HeartProps {
-  action: "stocks" | "crypto" | "exchange";
+  action: 'stocks' | 'crypto' | 'exchange';
   stocksData?: StocksProps;
   cryptoData?: CryptoProps;
   exchangeData?: ExchangeProps;
-};
+}
 
-export type FavoritesData = StocksProps |CryptoProps | ExchangeProps;
+export type FavoritesData = StocksProps | CryptoProps | ExchangeProps;
 
 type Mapped<T> = {
-  [P in keyof T]: T[P]
+  [P in keyof T]: T[P];
 }[];
 
 export type Favorites = Mapped<FavoritesData>;
@@ -179,10 +191,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   upLabel: string;
   label: string;
-};
+}
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   name: string;
   label?: string;
   options: { label: string; value: string }[];
-};
+}

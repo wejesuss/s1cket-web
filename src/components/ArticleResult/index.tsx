@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 
 import api from '../../services/api';
@@ -6,23 +7,27 @@ import { waitTwoMinutes } from '../../Helpers';
 import StockArticle from '../StockArticle';
 import { StocksArticleProps } from '../../@types';
 
-const ArticleResult: React.FC<StocksArticleProps> = (
-  { setIsResultsEmpty,
-    setResultsBySymbol,
-    setSearch,
-    setSeries,
-    setType,
-    symbol,
-    currency,
-    name,
-    region,
-    type,
-    intervalTime,
-    outputSize,
-    isResultsEmpty
-  }) => {
-
-  async function searchBySymbol(symbol: string, series: string, interval: string, outputsize: string) {
+const ArticleResult: React.FC<StocksArticleProps> = ({
+  setIsResultsEmpty,
+  setResultsBySymbol,
+  setSearch,
+  setSeries,
+  setType,
+  symbol,
+  currency,
+  name,
+  region,
+  type,
+  intervalTime,
+  outputSize,
+  isResultsEmpty,
+}) => {
+  async function searchBySymbol(
+    symbol: string,
+    series: string,
+    interval: string,
+    outputsize: string,
+  ) {
     try {
       const results = await api.get<PolishedIntradayDailyAndWeekly>(
         `/prices/${series}/${symbol}`,
@@ -54,10 +59,10 @@ const ArticleResult: React.FC<StocksArticleProps> = (
       return;
     }
 
-    setSearch(symbol)
-    setSeries(series)
+    setSearch(symbol);
+    setSeries(series);
     searchBySymbol(symbol, series, intervalTime, outputSize);
-    setType("symbol")
+    setType('symbol');
 
     localStorage.setItem('last', `${Date.now()}`);
   }
@@ -69,9 +74,11 @@ const ArticleResult: React.FC<StocksArticleProps> = (
       name={name}
       region={region}
       symbol={symbol}
-      seriesActionIntraday={() => handleSearchStocksBySeries("intraday", symbol)}
-      seriesActionDaily={() => handleSearchStocksBySeries("daily", symbol)}
-      seriesActionWeekly={() => handleSearchStocksBySeries("weekly", symbol)}
+      seriesActionIntraday={() =>
+        handleSearchStocksBySeries('intraday', symbol)
+      }
+      seriesActionDaily={() => handleSearchStocksBySeries('daily', symbol)}
+      seriesActionWeekly={() => handleSearchStocksBySeries('weekly', symbol)}
     />
   );
 };

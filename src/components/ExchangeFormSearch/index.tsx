@@ -1,23 +1,23 @@
+/* eslint-disable camelcase */
 import React, { FormEvent, useState, useEffect } from 'react';
 
 import Input from '../Input';
 
 import { waitTwoMinutes } from '../../Helpers';
-import {digital, physical} from '../../services/currencies.json';
+import { digital, physical } from '../../services/currencies.json';
 
 import { ExchangeFormSearchProps } from '../../@types';
 
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
 
-const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = (
-  { setFromCurrency,
-    setToCurrency,
-    from_currency,
-    to_currency,
-    searchExchangeRate
-  }) => {
-
+const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
+  setFromCurrency,
+  setToCurrency,
+  from_currency,
+  to_currency,
+  searchExchangeRate,
+}) => {
   const [currencies, setCurrencies] = useState(physical);
 
   function handleSearchExchange(e: FormEvent) {
@@ -32,23 +32,21 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = (
   }
 
   useEffect(() => {
-    const newCurrencies = physical.concat(digital.map(currency => {
-      return {
-        ...currency,
-        code: String(currency.code)
-      }
-    }));
+    const newCurrencies = physical.concat(
+      digital.map((currency) => {
+        return {
+          ...currency,
+          code: String(currency.code),
+        };
+      }),
+    );
 
     setCurrencies(newCurrencies);
   }, []);
 
   return (
     <form onSubmit={handleSearchExchange}>
-      <div
-        role="group"
-        aria-labelledby="legend"
-        className="symbol"
-      >
+      <div role="group" aria-labelledby="legend" className="symbol">
         <div id="legend">Quer fazer uma troca?</div>
 
         <Input
@@ -78,8 +76,10 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = (
         </button>
 
         <datalist id="currencies-list">
-          {currencies.map(currency => (
-            <option value={currency.code} key={currency.code}>{currency.name}</option>
+          {currencies.map((currency) => (
+            <option value={currency.code} key={currency.code}>
+              {currency.name}
+            </option>
           ))}
         </datalist>
       </div>

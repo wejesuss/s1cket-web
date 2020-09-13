@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,14 +13,14 @@ import currency from '../../assets/currency.svg';
 import './styles.css';
 
 const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(false);
 
   function handleToggleNavigatorState() {
-    document.body.classList.toggle('blocked', !opened)
-    setOpened(!opened)
+    document.body.classList.toggle('blocked', !opened);
+    setOpened(!opened);
   }
   return (
-    <header id="header" className={opened ? name + ' up' : name}>
+    <header id="header" className={opened ? `${name} up` : name}>
       <div className="header-box">
         <div className="logo">
           <Link to="/">
@@ -29,10 +31,12 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
           <div className="favorites">
             <Link
               to={{
-                pathname: "/favorites",
+                pathname: '/favorites',
                 search: `search=${activePage.toLowerCase()}`,
               }}
-            >Ver Favoritos</Link>
+            >
+              Ver Favoritos
+            </Link>
           </div>
         )}
         <nav className={opened ? 'menu opened' : 'menu'}>
@@ -72,13 +76,16 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
             </li>
           </ul>
           <div id="burger" onClick={handleToggleNavigatorState}>
-            <i></i>
-            <i></i>
-            <i></i>
+            <i />
+            <i />
+            <i />
             <div className="modal">
               <ul className="menu-burger">
                 <li>
-                  <Link to="/" className={activePage === 'Home' ? 'active' : ''}>
+                  <Link
+                    to="/"
+                    className={activePage === 'Home' ? 'active' : ''}
+                  >
                     <img src={home} alt="Home" />
                     Home
                   </Link>

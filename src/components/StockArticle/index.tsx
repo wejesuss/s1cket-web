@@ -5,17 +5,16 @@ import Heart from '../Heart';
 
 import './styles.css';
 
-const StockArticle: React.FC<StockArticleProps> = (
-  { symbol,
-    currency,
-    name,
-    region,
-    type,
-    seriesActionIntraday,
-    seriesActionDaily,
-    seriesActionWeekly
-  }) => {
-
+const StockArticle: React.FC<StockArticleProps> = ({
+  symbol,
+  currency,
+  name,
+  region,
+  type,
+  seriesActionIntraday,
+  seriesActionDaily,
+  seriesActionWeekly,
+}) => {
   return (
     <article className="stocks">
       <header>
@@ -27,11 +26,12 @@ const StockArticle: React.FC<StockArticleProps> = (
             name,
             region,
             symbol,
-            type
+            type,
           }}
         />
         <h1>
-          {name} <sup>{symbol}</sup>
+          {name}
+          <sup>{symbol}</sup>
         </h1>
         <div className="info">
           <div className="row">
@@ -54,19 +54,13 @@ const StockArticle: React.FC<StockArticleProps> = (
       </header>
 
       <footer>
-        <button
-          onClick={() => seriesActionIntraday()}
-        >
+        <button type="button" onClick={() => seriesActionIntraday()}>
           Intraday
         </button>
-        <button
-          onClick={() => seriesActionDaily()}
-        >
+        <button type="button" onClick={() => seriesActionDaily()}>
           Daily
         </button>
-        <button
-          onClick={() => seriesActionWeekly()}
-        >
+        <button type="button" onClick={() => seriesActionWeekly()}>
           Weekly
         </button>
       </footer>

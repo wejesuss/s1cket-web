@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 
 import Header from '../../components/Header';
@@ -15,18 +16,21 @@ const Exchange: React.FC = () => {
   const [exchangeRate, setExchangeRate] = useState<PolishedExchangeRate>();
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
-  async function searchExchangeRate(from_currency: string, to_currency: string) {
-    if(!from_currency || !to_currency) {
-      return
+  async function searchExchangeRate(
+    from_currency_code: string,
+    to_currency_code: string,
+  ) {
+    if (!from_currency_code || !to_currency_code) {
+      return;
     }
 
     try {
       const results = await api.get<PolishedExchangeRate>(
-        "/currencies/exchange",
+        '/currencies/exchange',
         {
           params: {
-            from_currency,
-            to_currency
+            from_currency: from_currency_code,
+            to_currency: to_currency_code,
           },
         },
       );
@@ -48,6 +52,7 @@ const Exchange: React.FC = () => {
   return (
     <>
       <Header name="exchange" activePage="Exchange" hasFavorites />
+
       <div id="exchange">
         <ExchangeFormSearch
           setFromCurrency={setFromCurrency}
@@ -56,11 +61,16 @@ const Exchange: React.FC = () => {
           to_currency={to_currency}
           searchExchangeRate={searchExchangeRate}
         />
+
         <main>
           {exchangeRate?.currencyExchangeRate && (
             <ExchangeArticle
-              fromCurrencyCode={exchangeRate.currencyExchangeRate.fromCurrencyCode}
-              fromCurrencyName={exchangeRate.currencyExchangeRate.fromCurrencyName}
+              fromCurrencyCode={
+                exchangeRate.currencyExchangeRate.fromCurrencyCode
+              }
+              fromCurrencyName={
+                exchangeRate.currencyExchangeRate.fromCurrencyName
+              }
               toCurrencyCode={exchangeRate.currencyExchangeRate.toCurrencyCode}
               toCurrencyName={exchangeRate.currencyExchangeRate.toCurrencyName}
               exchangeRate={exchangeRate.currencyExchangeRate.exchangeRate}

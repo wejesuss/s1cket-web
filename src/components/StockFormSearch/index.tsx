@@ -12,26 +12,25 @@ import searchIcon from '../../assets/search.svg';
 import { waitTwoMinutes } from '../../Helpers';
 import './styles.css';
 
-const StocksFormSearch: React.FC<StocksFormSearchProps> = (
-  { setIntervalTime,
-    setOutputSize,
-    setSearch,
-    setSeries,
-    setType,
-    setResultsByName,
-    setIsResultsEmpty,
-    type,
-    search,
-    series,
-    intervalTime,
-    outputSize,
-    isResultsEmpty,
-    searchBySymbol
-  }) => {
-
+const StocksFormSearch: React.FC<StocksFormSearchProps> = ({
+  setIntervalTime,
+  setOutputSize,
+  setSearch,
+  setSeries,
+  setType,
+  setResultsByName,
+  setIsResultsEmpty,
+  type,
+  search,
+  series,
+  intervalTime,
+  outputSize,
+  isResultsEmpty,
+  searchBySymbol,
+}) => {
   async function searchByName(name: string) {
-    if(!name) {
-      return
+    if (!name) {
+      return;
     }
     try {
       const results = await api.get<PolishedSearch>(`/search/${name}`);
