@@ -16,8 +16,8 @@ export type PolishedInformations = 'open' | 'high' | 'low' | 'close' | 'volume';
 export interface PolishedIntradayDailyAndWeekly {
   data: PolishedMetaIntradayDailyAndWeekly | undefined;
   timeSeries:
-      | Record<string, Record<PolishedInformations, string> | undefined>
-      | undefined;
+    | Record<string, Record<PolishedInformations, string> | undefined>
+    | undefined;
   error?: string;
 }
 
@@ -58,23 +58,21 @@ export type PolishedCryptoSeriesData = {
 
 export interface PolishedCryptoSeries {
   data: PolishedCryptoMetaData | undefined;
-  timeSeries:
-      | Record<string, PolishedCryptoSeriesData | undefined>
-      | undefined;
+  timeSeries: Record<string, PolishedCryptoSeriesData | undefined> | undefined;
   error?: string;
 }
 
 export interface PolishedExchangeRate {
   currencyExchangeRate?: {
-      fromCurrencyCode: string;
-      fromCurrencyName: string;
-      toCurrencyCode: string;
-      toCurrencyName: string;
-      exchangeRate: string;
-      lastRefreshed: string;
-      timeZone: string;
-      bidPrice: string;
-      askPrice: string;
+    fromCurrencyCode: string;
+    fromCurrencyName: string;
+    toCurrencyCode: string;
+    toCurrencyName: string;
+    exchangeRate: string;
+    lastRefreshed: string;
+    timeZone: string;
+    bidPrice: string;
+    askPrice: string;
   };
   error?: string;
 }

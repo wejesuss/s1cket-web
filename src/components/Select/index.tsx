@@ -9,7 +9,7 @@ const Select: React.FC<SelectProps> = ({ name, label, options, ...rest }) => {
   return (
     <div className="select-block">
       <select name={name} id={name} {...rest}>
-        {options.map(option => (
+        {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

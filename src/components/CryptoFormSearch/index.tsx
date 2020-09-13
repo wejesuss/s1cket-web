@@ -11,16 +11,15 @@ import { CryptoFormSearchProps } from '../../@types';
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
 
-const CryptoFormSearch: React.FC<CryptoFormSearchProps> = (
-  { setSearch,
-    setMarket,
-    setSeries,
-    search,
-    market,
-    series,
-    searchBySymbol
-  }) => {
-
+const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
+  setSearch,
+  setMarket,
+  setSeries,
+  search,
+  market,
+  series,
+  searchBySymbol,
+}) => {
   function handleSearchCrypto(e: FormEvent) {
     e.preventDefault();
 
@@ -34,11 +33,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = (
 
   return (
     <form onSubmit={handleSearchCrypto}>
-      <div
-        role="group"
-        aria-labelledby="legend"
-        className="symbol"
-      >
+      <div role="group" aria-labelledby="legend" className="symbol">
         <div id="legend">O que deseja ?</div>
 
         <Select
@@ -47,9 +42,9 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = (
           value={series}
           onChange={(e) => setSeries(e.target.value)}
           options={[
-            { label: "Daily", value: "daily" },
-            { label: "Weekly", value: "weekly" },
-            { label: "Monthly", value: "monthly" },
+            { label: 'Daily', value: 'daily' },
+            { label: 'Weekly', value: 'weekly' },
+            { label: 'Monthly', value: 'monthly' },
           ]}
         />
 
@@ -80,13 +75,17 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = (
         </button>
 
         <datalist id="market-list">
-          {currencies.physical.map(physical => (
-            <option value={physical.code} key={physical.code}>{physical.name}</option>
+          {currencies.physical.map((physical) => (
+            <option value={physical.code} key={physical.code}>
+              {physical.name}
+            </option>
           ))}
         </datalist>
         <datalist id="symbol-list">
-          {currencies.digital.map(digital => (
-            <option value={String(digital.code)} key={digital.code}>{digital.name}</option>
+          {currencies.digital.map((digital) => (
+            <option value={String(digital.code)} key={digital.code}>
+              {digital.name}
+            </option>
           ))}
         </datalist>
       </div>

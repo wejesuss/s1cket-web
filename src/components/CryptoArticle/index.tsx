@@ -5,16 +5,15 @@ import Heart from '../Heart';
 
 import './styles.css';
 
-const CryptoArticle: React.FC<CryptoArticleProps> = (
-  { symbol,
-    name,
-    currency,
-    currencyName,
-    seriesActionDaily,
-    seriesActionWeekly,
-    seriesActionMonthly
-  }) => {
-
+const CryptoArticle: React.FC<CryptoArticleProps> = ({
+  symbol,
+  name,
+  currency,
+  currencyName,
+  seriesActionDaily,
+  seriesActionWeekly,
+  seriesActionMonthly,
+}) => {
   return (
     <article className="crypto">
       <header>
@@ -25,16 +24,20 @@ const CryptoArticle: React.FC<CryptoArticleProps> = (
             symbol,
             currency,
             currencyName,
-            name
+            name,
           }}
         />
         <h1>
-          {name} <sup>{symbol}</sup>
+          {name}
+          <sup>{symbol}</sup>
         </h1>
         <div className="info">
           <div className="row">
             <h5>Mercado: </h5>
-            <h6>{currencyName}/{currency}</h6>
+            <h6>
+              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+              {currencyName}/{currency}
+            </h6>
           </div>
 
           <div className="row prices">
@@ -44,19 +47,13 @@ const CryptoArticle: React.FC<CryptoArticleProps> = (
       </header>
 
       <footer>
-        <button
-          onClick={() => seriesActionDaily()}
-        >
+        <button type="button" onClick={() => seriesActionDaily()}>
           Daily
         </button>
-        <button
-          onClick={() => seriesActionWeekly()}
-        >
+        <button type="button" onClick={() => seriesActionWeekly()}>
           Weekly
         </button>
-        <button
-          onClick={() => seriesActionMonthly()}
-        >
+        <button type="button" onClick={() => seriesActionMonthly()}>
           Monthly
         </button>
       </footer>

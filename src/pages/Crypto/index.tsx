@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -13,17 +14,23 @@ import { waitTwoMinutes } from '../../Helpers';
 import './styles.css';
 
 const Crypto: React.FC = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [search, setSearch] = useState('BTC');
   const [market, setMarket] = useState('USD');
   const [series, setSeries] = useState('daily');
-  const [resultsBySymbol, setResultsBySymbol] = useState<PolishedCryptoSeries>();
-  const [code, setCode] = useState('USD')
+  const [resultsBySymbol, setResultsBySymbol] = useState<
+    PolishedCryptoSeries
+  >();
+  const [code, setCode] = useState('USD');
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
-  async function searchBySymbol(symbol: string, series: string, market: string) {
-    if(!symbol || !series || !market) {
-      return
+  async function searchBySymbol(
+    symbol: string,
+    series: string,
+    market: string,
+  ) {
+    if (!symbol || !series || !market) {
+      return;
     }
 
     try {
@@ -31,12 +38,12 @@ const Crypto: React.FC = () => {
         `/currencies/prices/${series}/${symbol}`,
         {
           params: {
-            market
+            market,
           },
         },
       );
 
-      setCode(results.data.data?.marketCode.toUpperCase() || 'USD')
+      setCode(results.data.data?.marketCode.toUpperCase() || 'USD');
       setResultsBySymbol(results.data);
 
       if (results.data.error) {
@@ -51,23 +58,17 @@ const Crypto: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    const { state } = history.location;
-
-    if(state) {
-      const { series: incomingSeries, symbol: incomingSymbol, market: incomingMarket } = state as { series?: string, symbol?: string, market?: string };
-      searchWithFavorites(incomingSeries, incomingSymbol, incomingMarket)
-    }
-    //eslint-disable-next-line
-  }, [])
-
-  function searchWithFavorites(incomingSeries?: string, incomingSymbol?: string, incomingMarket?: string) {
+  function searchWithFavorites(
+    incomingSeries?: string,
+    incomingSymbol?: string,
+    incomingMarket?: string,
+  ) {
     const seriesToSearch = incomingSeries || series;
     const symbolToSearch = incomingSymbol || search;
     const marketToSearch = incomingMarket || market;
-    setSeries(() => seriesToSearch)
-    setSearch(() => symbolToSearch)
-    setMarket(() => marketToSearch)
+    setSeries(() => seriesToSearch);
+    setSearch(() => symbolToSearch);
+    setMarket(() => marketToSearch);
 
     if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
@@ -76,6 +77,20 @@ const Crypto: React.FC = () => {
 
     searchBySymbol(symbolToSearch, seriesToSearch, marketToSearch);
   }
+
+  useEffect(() => {
+    const { state } = history.location;
+
+    if (state) {
+      const {
+        series: incomingSeries,
+        symbol: incomingSymbol,
+        market: incomingMarket,
+      } = state as { series?: string; symbol?: string; market?: string };
+      searchWithFavorites(incomingSeries, incomingSymbol, incomingMarket);
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
@@ -93,7 +108,11 @@ const Crypto: React.FC = () => {
         <main>
           {resultsBySymbol?.data?.information && (
             <>
-              <h1 className="results-title">Informações sobre {resultsBySymbol?.data?.digitalCurrencyName}</h1>
+              <h1 className="results-title">
+                Informações sobre
+                {resultsBySymbol?.data?.digitalCurrencyName}
+              </h1>
+
               <div className="information">
                 <table>
                   <caption>{resultsBySymbol.data.information}</caption>
@@ -110,7 +129,7 @@ const Crypto: React.FC = () => {
                             symbol: resultsBySymbol.data.digitalCurrencyCode,
                             name: resultsBySymbol.data.digitalCurrencyName,
                             currency: resultsBySymbol.data.marketCode,
-                            currencyName: resultsBySymbol.data.marketName
+                            currencyName: resultsBySymbol.data.marketName,
                           }}
                         />
                       </td>
@@ -141,7 +160,7 @@ const Crypto: React.FC = () => {
 
                 {resultsBySymbol && (
                   <div className="chart">
-                    {code !== "USD" && (
+                    {code !== 'USD' && (
                       <Chart
                         cryptoSeries={resultsBySymbol.timeSeries}
                         currencyCode={code}
@@ -158,6 +177,7 @@ const Crypto: React.FC = () => {
                       height={200}
                       type="candlestick"
                     />
+
                     <Chart
                       cryptoSeries={resultsBySymbol.timeSeries}
                       type="bar"
