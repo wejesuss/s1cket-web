@@ -15,11 +15,11 @@ const Heart: React.FC<HeartProps> = ({
   exchangeData,
 }) => {
   const [isFavorited, setIsFavorited] = useState(false);
-  const [favoriteData] = useState({
+  const favoriteData = {
     ...stocksData,
     ...cryptoData,
-    ...exchangeData
-  });
+    ...exchangeData,
+  };
 
   function toggleAddRemoveFavorites(
     data: FavoritesData,
