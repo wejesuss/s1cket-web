@@ -126,4 +126,4 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

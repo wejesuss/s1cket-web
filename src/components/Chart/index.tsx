@@ -277,4 +277,4 @@ const Chart: React.FC<ChartProps> = ({
   );
 };
 
-export default Chart;
+export default React.memo(Chart);
