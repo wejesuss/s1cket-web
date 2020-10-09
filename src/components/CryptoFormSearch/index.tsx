@@ -2,9 +2,9 @@ import React, { FormEvent } from 'react';
 
 import Input from '../Input';
 import Select from '../Select';
+import DataList from '../DataList';
 
 import { waitTwoMinutes } from '../../helpers';
-import currencies from '../../services/currencies.json';
 
 import { CryptoFormSearchProps } from '../../@types';
 
@@ -54,7 +54,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           name="market"
           spellCheck="false"
           autoComplete="off"
-          list="market-list"
+          list="physical-list"
           onChange={(e) => setMarket(e.target.value)}
           value={market}
         />
@@ -65,7 +65,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           name="search"
           spellCheck="false"
           autoComplete="off"
-          list="symbol-list"
+          list="digital-list"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
@@ -74,20 +74,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           <img src={searchIcon} alt="Pesquisar" />
         </button>
 
-        <datalist id="market-list">
-          {currencies.physical.map((physical) => (
-            <option value={physical.code} key={physical.code}>
-              {physical.name}
-            </option>
-          ))}
-        </datalist>
-        <datalist id="symbol-list">
-          {currencies.digital.map((digital) => (
-            <option value={String(digital.code)} key={digital.code}>
-              {digital.name}
-            </option>
-          ))}
-        </datalist>
+        <DataList />
       </div>
     </form>
   );

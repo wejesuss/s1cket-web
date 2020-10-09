@@ -179,6 +179,10 @@ export interface HeartProps {
   exchangeData?: ExchangeProps;
 }
 
+export interface DataListProps {
+  unified?: boolean;
+}
+
 export type FavoritesData = StocksProps | CryptoProps | ExchangeProps;
 
 type Mapped<T> = {

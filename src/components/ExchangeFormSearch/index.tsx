@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
-import React, { FormEvent, useState, useEffect } from 'react';
+import React, { FormEvent } from 'react';
 
 import Input from '../Input';
 
 import { waitTwoMinutes } from '../../helpers';
-import { digital, physical } from '../../services/currencies.json';
 
 import { ExchangeFormSearchProps } from '../../@types';
 
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
+import DataList from '../DataList';
 
 const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
   setFromCurrency,
@@ -18,8 +18,6 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
   to_currency,
   searchExchangeRate,
 }) => {
-  const [currencies, setCurrencies] = useState(physical);
-
   function handleSearchExchange(e: FormEvent) {
     e.preventDefault();
 
@@ -30,19 +28,6 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
 
     searchExchangeRate(from_currency, to_currency);
   }
-
-  useEffect(() => {
-    const newCurrencies = physical.concat(
-      digital.map((currency) => {
-        return {
-          ...currency,
-          code: String(currency.code),
-        };
-      }),
-    );
-
-    setCurrencies(newCurrencies);
-  }, []);
 
   return (
     <form onSubmit={handleSearchExchange}>
@@ -75,13 +60,7 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
           <img src={searchIcon} alt="Pesquisar" />
         </button>
 
-        <datalist id="currencies-list">
-          {currencies.map((currency) => (
-            <option value={currency.code} key={currency.code}>
-              {currency.name}
-            </option>
-          ))}
-        </datalist>
+        <DataList unified />
       </div>
     </form>
   );
