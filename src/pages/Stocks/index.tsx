@@ -155,6 +155,7 @@ const Stocks: React.FC = () => {
                 <>
                   <h1 className="results-title">
                     Informações sobre
+                    {'  '}
                     {resultsBySymbol?.data?.symbol.toUpperCase()}
                   </h1>
 

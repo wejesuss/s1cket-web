@@ -110,6 +110,7 @@ const Crypto: React.FC = () => {
             <>
               <h1 className="results-title">
                 Informações sobre
+                {'  '}
                 {resultsBySymbol?.data?.digitalCurrencyName}
               </h1>
 
