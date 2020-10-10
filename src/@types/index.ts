@@ -3,6 +3,7 @@
 import { InputHTMLAttributes, SelectHTMLAttributes } from 'react';
 import {
   PolishedCryptoSeriesData,
+  PolishedExchangeRate,
   PolishedInformations,
   PolishedIntradayDailyAndWeekly,
   PolishedSearch,
@@ -105,12 +106,17 @@ export interface CryptoFormSearchProps {
   searchBySymbol: Function;
 }
 
-export interface ExchangeFormSearchProps {
-  setFromCurrency: React.Dispatch<React.SetStateAction<string>>;
-  setToCurrency: React.Dispatch<React.SetStateAction<string>>;
-  from_currency: string;
-  to_currency: string;
-  searchExchangeRate: Function;
+export interface ExchangeRateForm {
+  from: string;
+  to: string;
+}
+
+export interface ExchangeRateData {
+  exchangeRate?: PolishedExchangeRate;
+  form: ExchangeRateForm;
+  isResultsEmpty: boolean;
+  updateExchangeRate(fromC: string, toC: string): void;
+  updateForm({ from, to }: Partial<ExchangeRateForm>): void;
 }
 
 export type CandleStickPolished = {

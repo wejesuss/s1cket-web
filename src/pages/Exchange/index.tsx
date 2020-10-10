@@ -1,66 +1,22 @@
-/* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React from 'react';
 
 import Header from '../../components/Header';
 import ExchangeFormSearch from '../../components/ExchangeFormSearch';
 import ExchangeArticle from '../../components/ExchangeArticle';
 
-import api from '../../services/api';
-import { PolishedExchangeRate } from '../../services/api-types';
+import { useExchangeRate } from '../../hooks/useExchangeRate';
 
 import './styles.css';
 
 const Exchange: React.FC = () => {
-  const [from_currency, setFromCurrency] = useState('BTC');
-  const [to_currency, setToCurrency] = useState('USD');
-  const [exchangeRate, setExchangeRate] = useState<PolishedExchangeRate>();
-  const [isResultsEmpty, setIsResultsEmpty] = useState(false);
-
-  async function searchExchangeRate(
-    from_currency_code: string,
-    to_currency_code: string,
-  ) {
-    if (!from_currency_code || !to_currency_code) {
-      return;
-    }
-
-    try {
-      const results = await api.get<PolishedExchangeRate>(
-        '/currencies/exchange',
-        {
-          params: {
-            from_currency: from_currency_code,
-            to_currency: to_currency_code,
-          },
-        },
-      );
-
-      setExchangeRate(results.data);
-
-      if (results.data.error) {
-        setIsResultsEmpty(true);
-      } else {
-        localStorage.setItem('last', `${Date.now()}`);
-        setIsResultsEmpty(false);
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
+  const { exchangeRate, isResultsEmpty } = useExchangeRate();
 
   return (
     <>
       <Header name="exchange" activePage="Exchange" hasFavorites />
 
       <div id="exchange">
-        <ExchangeFormSearch
-          setFromCurrency={setFromCurrency}
-          setToCurrency={setToCurrency}
-          from_currency={from_currency}
-          to_currency={to_currency}
-          searchExchangeRate={searchExchangeRate}
-        />
+        <ExchangeFormSearch />
 
         <main>
           {exchangeRate?.currencyExchangeRate && (

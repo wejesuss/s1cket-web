@@ -1,23 +1,21 @@
-/* eslint-disable camelcase */
 import React, { FormEvent } from 'react';
 
 import Input from '../Input';
+import DataList from '../DataList';
 
 import { waitTwoMinutes } from '../../helpers';
-
-import { ExchangeFormSearchProps } from '../../@types';
+import { useExchangeRate } from '../../hooks/useExchangeRate';
 
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
-import DataList from '../DataList';
 
-const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
-  setFromCurrency,
-  setToCurrency,
-  from_currency,
-  to_currency,
-  searchExchangeRate,
-}) => {
+const ExchangeFormSearch: React.FC = () => {
+  const {
+    form: { from, to },
+    updateExchangeRate,
+    updateForm,
+  } = useExchangeRate();
+
   function handleSearchExchange(e: FormEvent) {
     e.preventDefault();
 
@@ -26,7 +24,7 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
       return;
     }
 
-    searchExchangeRate(from_currency, to_currency);
+    updateExchangeRate(from, to);
   }
 
   return (
@@ -41,8 +39,8 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
           spellCheck="false"
           autoComplete="off"
           list="currencies-list"
-          onChange={(e) => setFromCurrency(e.target.value)}
-          value={from_currency}
+          onChange={(e) => updateForm({ from: e.target.value })}
+          value={from}
         />
 
         <Input
@@ -52,8 +50,8 @@ const ExchangeFormSearch: React.FC<ExchangeFormSearchProps> = ({
           spellCheck="false"
           autoComplete="off"
           list="currencies-list"
-          onChange={(e) => setToCurrency(e.target.value)}
-          value={to_currency}
+          onChange={(e) => updateForm({ to: e.target.value })}
+          value={to}
         />
 
         <button type="submit">

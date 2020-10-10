@@ -6,6 +6,7 @@ import Stocks from './pages/Stocks';
 import Favorites from './pages/Favorites';
 import Crypto from './pages/Crypto';
 import Exchange from './pages/Exchange';
+import { ExchangeRateProvider } from './contexts/exchangeRate';
 
 const Routes: FC = () => {
   return (
@@ -15,7 +16,9 @@ const Routes: FC = () => {
       </Route>
 
       <Route path="/exchange">
-        <Exchange />
+        <ExchangeRateProvider>
+          <Exchange />
+        </ExchangeRateProvider>
       </Route>
 
       <Route path="/stocks">
