@@ -60,8 +60,9 @@ const ExchangeArticle: React.FC<ExchangeArticleProps> = ({
           <div className="row">
             <h5>Para: </h5>
             <h6>
-              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-              {toCurrencyName}/{toCurrencyCode}
+              {toCurrencyName}
+              <>/</>
+              {toCurrencyCode}
             </h6>
           </div>
 

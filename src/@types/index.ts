@@ -6,22 +6,12 @@ import {
   PolishedExchangeRate,
   PolishedInformations,
   PolishedIntradayDailyAndWeekly,
-  PolishedSearch,
 } from '../services/api-types';
 
 export interface HeaderProps {
   name: string;
   activePage: string;
   hasFavorites?: boolean;
-}
-
-export interface StockBySymbolProps {
-  series: string;
-  intervalTime: string;
-  outputSize: string;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setIntervalTime: React.Dispatch<React.SetStateAction<string>>;
-  setOutputSize: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface StockArticleProps {
@@ -36,21 +26,11 @@ export interface StockArticleProps {
 }
 
 export interface StocksArticleProps {
-  setResultsBySymbol: React.Dispatch<
-    React.SetStateAction<PolishedIntradayDailyAndWeekly | undefined>
-  >;
-  setIsResultsEmpty: React.Dispatch<React.SetStateAction<IsResultsEmpty>>;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setType: React.Dispatch<React.SetStateAction<string>>;
   symbol: string;
   currency: string;
   name: string;
   region: string;
   type: string;
-  intervalTime: string;
-  outputSize: string;
-  isResultsEmpty: IsResultsEmpty;
 }
 
 export interface CryptoArticleProps {
@@ -77,23 +57,6 @@ export interface ExchangeArticleProps {
 export interface IsResultsEmpty {
   byName: boolean;
   bySymbol: boolean;
-}
-
-export interface StocksFormSearchProps {
-  setType: React.Dispatch<React.SetStateAction<string>>;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  setIntervalTime: React.Dispatch<React.SetStateAction<string>>;
-  setOutputSize: React.Dispatch<React.SetStateAction<string>>;
-  setResultsByName: React.Dispatch<React.SetStateAction<PolishedSearch>>;
-  setIsResultsEmpty: React.Dispatch<React.SetStateAction<IsResultsEmpty>>;
-  type: string;
-  search: string;
-  series: string;
-  intervalTime: string;
-  outputSize: string;
-  isResultsEmpty: IsResultsEmpty;
-  searchBySymbol: Function;
 }
 
 export interface CryptoFormSearchProps {

@@ -1,71 +1,26 @@
-/* eslint-disable no-shadow */
 /* eslint-disable react/jsx-indent */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { waitTwoMinutes } from '../../helpers';
+import { useStocks } from '../../hooks/useStocks';
 
 import Header from '../../components/Header';
 import Chart from '../../components/Chart';
 import StockFormSearch from '../../components/StockFormSearch';
 import ArticleResult from '../../components/ArticleResult';
 
-import api from '../../services/api';
-import {
-  PolishedIntradayDailyAndWeekly,
-  PolishedSearch,
-} from '../../services/api-types';
-
 import './styles.css';
-import { waitTwoMinutes } from '../../helpers';
 
 const Stocks: React.FC = () => {
   const history = useHistory();
-  const [type, setType] = useState('name');
-  const [search, setSearch] = useState('');
-  const [series, setSeries] = useState('intraday');
-  const [intervalTime, setIntervalTime] = useState('5min');
-  const [outputSize, setOutputSize] = useState('compact');
-  const [resultsByName, setResultsByName] = useState<PolishedSearch>([]);
-  const [resultsBySymbol, setResultsBySymbol] = useState<
-    PolishedIntradayDailyAndWeekly
-  >();
-  const [isResultsEmpty, setIsResultsEmpty] = useState({
-    byName: false,
-    bySymbol: false,
-  });
-
-  async function searchBySymbol(
-    symbol: string,
-    series: string,
-    interval: string,
-    outputsize: string,
-  ) {
-    if (!symbol || !series || !interval || !outputSize) {
-      return;
-    }
-    try {
-      const results = await api.get<PolishedIntradayDailyAndWeekly>(
-        `/prices/${series}/${symbol}`,
-        {
-          params: {
-            interval,
-            outputsize,
-          },
-        },
-      );
-
-      setResultsBySymbol(results.data);
-
-      if (results.data.error) {
-        setIsResultsEmpty({ ...isResultsEmpty, bySymbol: true });
-      } else {
-        localStorage.setItem('last', `${Date.now()}`);
-        setIsResultsEmpty({ ...isResultsEmpty, bySymbol: false });
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
+  const {
+    byName,
+    bySymbol,
+    isResultsEmpty,
+    form: { intervalTime, outputSize, search, series, type },
+    updateForm,
+    searchBySymbol,
+  } = useStocks();
 
   function searchWithFavorites(
     incomingSeries?: string,
@@ -73,9 +28,13 @@ const Stocks: React.FC = () => {
   ) {
     const seriesToSearch = incomingSeries || series;
     const symbolToSearch = incomingSymbol || search;
-    setType(() => 'symbol');
-    setSeries(() => seriesToSearch);
-    setSearch(() => symbolToSearch);
+
+    updateForm({
+      type: 'symbol',
+      series: symbolToSearch,
+      intervalTime: '5min',
+      search: symbolToSearch,
+    });
 
     if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
@@ -103,42 +62,19 @@ const Stocks: React.FC = () => {
       <Header name="stocks" activePage="Stocks" hasFavorites />
 
       <div id="stocks">
-        <StockFormSearch
-          setType={setType}
-          setSearch={setSearch}
-          setSeries={setSeries}
-          setIntervalTime={setIntervalTime}
-          setOutputSize={setOutputSize}
-          setIsResultsEmpty={setIsResultsEmpty}
-          setResultsByName={setResultsByName}
-          type={type}
-          search={search}
-          series={series}
-          intervalTime={intervalTime}
-          outputSize={outputSize}
-          isResultsEmpty={isResultsEmpty}
-          searchBySymbol={searchBySymbol}
-        />
+        <StockFormSearch />
         <main>
           {type === 'name'
-            ? resultsByName.length > 0 && (
+            ? byName.length > 0 && (
                 <>
                   <h1 className="results-title">
                     Estes são os resultados da sua busca
                   </h1>
 
                   <div className="results">
-                    {resultsByName.map((result) => (
+                    {byName.map((result) => (
                       <ArticleResult
                         key={result.symbol}
-                        setIsResultsEmpty={setIsResultsEmpty}
-                        setResultsBySymbol={setResultsBySymbol}
-                        setSearch={setSearch}
-                        setSeries={setSeries}
-                        setType={setType}
-                        intervalTime={intervalTime}
-                        isResultsEmpty={isResultsEmpty}
-                        outputSize={outputSize}
                         type={result.type}
                         currency={result.currency}
                         symbol={result.symbol}
@@ -151,53 +87,53 @@ const Stocks: React.FC = () => {
                   <p className="results-end">Parece que chegamos ao fim!</p>
                 </>
               )
-            : resultsBySymbol?.data?.symbol && (
+            : bySymbol?.data?.symbol && (
                 <>
                   <h1 className="results-title">
                     Informações sobre
                     {'  '}
-                    {resultsBySymbol?.data?.symbol.toUpperCase()}
+                    {bySymbol?.data?.symbol.toUpperCase()}
                   </h1>
 
                   <div className="information">
                     <table>
-                      <caption>{resultsBySymbol.data.information}</caption>
+                      <caption>{bySymbol.data.information}</caption>
                       <tbody>
                         <tr>
                           <th>Última Atualização:</th>
-                          <td>{resultsBySymbol.data.lastRefreshed}</td>
+                          <td>{bySymbol.data.lastRefreshed}</td>
                         </tr>
 
-                        {resultsBySymbol.data.interval && (
+                        {bySymbol.data.interval && (
                           <tr>
                             <th>Intervalo:</th>
-                            <td>{resultsBySymbol.data.interval}</td>
+                            <td>{bySymbol.data.interval}</td>
                           </tr>
                         )}
 
-                        {resultsBySymbol.data.outputSize && (
+                        {bySymbol.data.outputSize && (
                           <tr>
                             <th>Tipo de Saída:</th>
-                            <td>{resultsBySymbol.data.outputSize}</td>
+                            <td>{bySymbol.data.outputSize}</td>
                           </tr>
                         )}
 
                         <tr>
                           <th>Fuso Horário:</th>
-                          <td>{resultsBySymbol.data.timeZone}</td>
+                          <td>{bySymbol.data.timeZone}</td>
                         </tr>
                       </tbody>
                     </table>
 
-                    {resultsBySymbol && (
+                    {bySymbol && (
                       <div className="chart">
                         <Chart
-                          stockSeries={resultsBySymbol.timeSeries}
+                          stockSeries={bySymbol.timeSeries}
                           height={200}
                           type="candlestick"
                         />
                         <Chart
-                          stockSeries={resultsBySymbol.timeSeries}
+                          stockSeries={bySymbol.timeSeries}
                           type="bar"
                           height={200}
                         />

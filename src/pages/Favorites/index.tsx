@@ -35,7 +35,7 @@ const Favorites: React.FC = () => {
       setIsResultsEmpty(true);
     } else {
       setFavorites(localFavorites);
-      setIsResultsEmpty(false);
+      // setIsResultsEmpty(false);
     }
 
     setParams(param);
@@ -77,7 +77,7 @@ const Favorites: React.FC = () => {
 
       localStorage.setItem('last', `${Date.now()}`);
       setFavorites(newFavorites);
-      setIsResultsEmpty(false);
+      // setIsResultsEmpty(false);
     } catch (error) {
       console.error(error);
       alert('Erro inesperado, tente novamente em breve');

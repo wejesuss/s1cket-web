@@ -1,68 +1,32 @@
-/* eslint-disable no-shadow */
 import React from 'react';
 
-import api from '../../services/api';
-import { PolishedIntradayDailyAndWeekly } from '../../services/api-types';
-import { waitTwoMinutes } from '../../helpers';
 import StockArticle from '../StockArticle';
+
+import { waitTwoMinutes } from '../../helpers';
 import { StocksArticleProps } from '../../@types';
+import { useStocks } from '../../hooks/useStocks';
 
 const ArticleResult: React.FC<StocksArticleProps> = ({
-  setIsResultsEmpty,
-  setResultsBySymbol,
-  setSearch,
-  setSeries,
-  setType,
   symbol,
   currency,
   name,
   region,
   type,
-  intervalTime,
-  outputSize,
-  isResultsEmpty,
 }) => {
-  async function searchBySymbol(
-    symbol: string,
-    series: string,
-    interval: string,
-    outputsize: string,
-  ) {
-    try {
-      const results = await api.get<PolishedIntradayDailyAndWeekly>(
-        `/prices/${series}/${symbol}`,
-        {
-          params: {
-            interval,
-            outputsize,
-          },
-        },
-      );
+  const {
+    form: { intervalTime, outputSize },
+    searchBySymbol,
+    updateForm,
+  } = useStocks();
 
-      setResultsBySymbol(results.data);
-
-      if (results.data.error) {
-        setIsResultsEmpty({ ...isResultsEmpty, bySymbol: true });
-      } else {
-        localStorage.setItem('last', `${Date.now()}`);
-        setIsResultsEmpty({ ...isResultsEmpty, bySymbol: false });
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
-
-  function handleSearchStocksBySeries(series: string, symbol: string) {
+  function handleSearchStocksBySeries(series: string, incomingSymbol: string) {
     if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
       return;
     }
 
-    setSearch(symbol);
-    setSeries(series);
-    searchBySymbol(symbol, series, intervalTime, outputSize);
-    setType('symbol');
+    updateForm({ series, search: incomingSymbol, type: 'symbol' });
+    searchBySymbol(incomingSymbol, series, intervalTime, outputSize);
 
     localStorage.setItem('last', `${Date.now()}`);
   }

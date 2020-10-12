@@ -1,23 +1,22 @@
 import React from 'react';
-import { StockBySymbolProps } from '../../@types';
+
+import { useStocks } from '../../hooks/useStocks';
 
 import Select from '../Select';
 
-const StockBySymbol: React.FC<StockBySymbolProps> = ({
-  intervalTime,
-  outputSize,
-  series,
-  setIntervalTime,
-  setOutputSize,
-  setSeries,
-}) => {
+const StockBySymbol: React.FC = () => {
+  const {
+    form: { intervalTime, outputSize, series },
+    updateForm,
+  } = useStocks();
+
   return (
     <>
       <Select
         name="series"
         label="Série Temporal"
         value={series}
-        onChange={(e) => setSeries(e.target.value)}
+        onChange={(e) => updateForm({ series: e.target.value })}
         options={[
           { label: 'Intraday', value: 'intraday' },
           { label: 'Daily', value: 'daily' },
@@ -30,7 +29,7 @@ const StockBySymbol: React.FC<StockBySymbolProps> = ({
           name="interval"
           label="Intervalo"
           value={intervalTime}
-          onChange={(e) => setIntervalTime(e.target.value)}
+          onChange={(e) => updateForm({ intervalTime: e.target.value })}
           options={[
             { label: '1 Min', value: '1min' },
             { label: '5 Min', value: '5min' },
@@ -45,7 +44,7 @@ const StockBySymbol: React.FC<StockBySymbolProps> = ({
         <Select
           name="output"
           value={outputSize}
-          onChange={(e) => setOutputSize(e.target.value)}
+          onChange={(e) => updateForm({ outputSize: e.target.value })}
           options={[
             { label: 'Compacto', value: 'compact' },
             { label: 'Completo', value: 'full' },

@@ -4,50 +4,19 @@ import Input from '../Input';
 import Select from '../Select';
 import StockBySymbol from '../StockBySymbol';
 
-import api from '../../services/api';
-import { PolishedSearch } from '../../services/api-types';
-import { StocksFormSearchProps } from '../../@types';
+import { waitTwoMinutes } from '../../helpers';
+import { useStocks } from '../../hooks/useStocks';
 
 import searchIcon from '../../assets/search.svg';
-import { waitTwoMinutes } from '../../helpers';
 import './styles.css';
 
-const StocksFormSearch: React.FC<StocksFormSearchProps> = ({
-  setIntervalTime,
-  setOutputSize,
-  setSearch,
-  setSeries,
-  setType,
-  setResultsByName,
-  setIsResultsEmpty,
-  type,
-  search,
-  series,
-  intervalTime,
-  outputSize,
-  isResultsEmpty,
-  searchBySymbol,
-}) => {
-  async function searchByName(name: string) {
-    if (!name) {
-      return;
-    }
-    try {
-      const results = await api.get<PolishedSearch>(`/search/${name}`);
-
-      setResultsByName(results.data);
-
-      if (results.data.length < 1) {
-        setIsResultsEmpty({ ...isResultsEmpty, byName: true });
-      } else {
-        localStorage.setItem('last', `${Date.now()}`);
-        setIsResultsEmpty({ ...isResultsEmpty, byName: false });
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
+const StocksFormSearch: React.FC = () => {
+  const {
+    form: { intervalTime, outputSize, search, series, type },
+    searchByName,
+    searchBySymbol,
+    updateForm,
+  } = useStocks();
 
   function handleSearchStocks(e: FormEvent) {
     e.preventDefault();
@@ -76,23 +45,14 @@ const StocksFormSearch: React.FC<StocksFormSearchProps> = ({
         <Select
           name="type"
           value={type}
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => updateForm({ type: e.target.value })}
           options={[
             { label: 'Pesquisar pelo nome', value: 'name' },
             { label: 'Pesquisar pelo símbolo', value: 'symbol' },
           ]}
         />
 
-        {type === 'symbol' && (
-          <StockBySymbol
-            series={series}
-            intervalTime={intervalTime}
-            outputSize={outputSize}
-            setSeries={setSeries}
-            setIntervalTime={setIntervalTime}
-            setOutputSize={setOutputSize}
-          />
-        )}
+        {type === 'symbol' && <StockBySymbol />}
 
         <Input
           label={
@@ -104,7 +64,7 @@ const StocksFormSearch: React.FC<StocksFormSearchProps> = ({
           name="search"
           spellCheck="false"
           autoComplete="off"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => updateForm({ search: e.target.value })}
           value={search}
         />
 
