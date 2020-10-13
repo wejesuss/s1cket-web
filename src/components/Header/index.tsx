@@ -19,6 +19,7 @@ const Header: React.FC<HeaderProps> = ({ name, hasFavorites, activePage }) => {
     document.body.classList.toggle('blocked', !opened);
     setOpened(!opened);
   }
+
   return (
     <header id="header" className={opened ? `${name} up` : name}>
       <div className="header-box">
