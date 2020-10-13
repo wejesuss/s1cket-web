@@ -1,5 +1,4 @@
-/* eslint-disable no-shadow */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Chart from '../../components/Chart';
@@ -7,56 +6,21 @@ import Heart from '../../components/Heart';
 import Header from '../../components/Header';
 import CryptoFormSearch from '../../components/CryptoFormSearch';
 
-import api from '../../services/api';
-import { PolishedCryptoSeries } from '../../services/api-types';
 import { waitTwoMinutes } from '../../helpers';
+import { useCrypto } from '../../hooks/useCrypto';
 
 import './styles.css';
 
 const Crypto: React.FC = () => {
   const history = useHistory();
-  const [search, setSearch] = useState('BTC');
-  const [market, setMarket] = useState('USD');
-  const [series, setSeries] = useState('daily');
-  const [resultsBySymbol, setResultsBySymbol] = useState<
-    PolishedCryptoSeries
-  >();
-  const [code, setCode] = useState('USD');
-  const [isResultsEmpty, setIsResultsEmpty] = useState(false);
-
-  async function searchBySymbol(
-    symbol: string,
-    series: string,
-    market: string,
-  ) {
-    if (!symbol || !series || !market) {
-      return;
-    }
-
-    try {
-      const results = await api.get<PolishedCryptoSeries>(
-        `/currencies/prices/${series}/${symbol}`,
-        {
-          params: {
-            market,
-          },
-        },
-      );
-
-      setCode(results.data.data?.marketCode.toUpperCase() || 'USD');
-      setResultsBySymbol(results.data);
-
-      if (results.data.error) {
-        setIsResultsEmpty(true);
-      } else {
-        localStorage.setItem('last', `${Date.now()}`);
-        setIsResultsEmpty(false);
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Erro inesperado, tente novamente em breve');
-    }
-  }
+  const {
+    code,
+    form: { market, search, series },
+    isResultsEmpty,
+    resultsBySymbol,
+    updateForm,
+    searchBySymbol,
+  } = useCrypto();
 
   function searchWithFavorites(
     incomingSeries?: string,
@@ -66,9 +30,12 @@ const Crypto: React.FC = () => {
     const seriesToSearch = incomingSeries || series;
     const symbolToSearch = incomingSymbol || search;
     const marketToSearch = incomingMarket || market;
-    setSeries(() => seriesToSearch);
-    setSearch(() => symbolToSearch);
-    setMarket(() => marketToSearch);
+
+    updateForm({
+      market: marketToSearch,
+      search: symbolToSearch,
+      series: seriesToSearch,
+    });
 
     if (!waitTwoMinutes()) {
       alert('Espere dois minutos para pesquisar de novo');
@@ -87,6 +54,7 @@ const Crypto: React.FC = () => {
         symbol: incomingSymbol,
         market: incomingMarket,
       } = state as { series?: string; symbol?: string; market?: string };
+
       searchWithFavorites(incomingSeries, incomingSymbol, incomingMarket);
     }
     // eslint-disable-next-line
@@ -95,16 +63,9 @@ const Crypto: React.FC = () => {
   return (
     <>
       <Header name="crypto" activePage="Crypto" hasFavorites />
+
       <div id="crypto">
-        <CryptoFormSearch
-          setSearch={setSearch}
-          setMarket={setMarket}
-          setSeries={setSeries}
-          search={search}
-          market={market}
-          series={series}
-          searchBySymbol={searchBySymbol}
-        />
+        <CryptoFormSearch />
         <main>
           {resultsBySymbol?.data?.information && (
             <>

@@ -57,7 +57,7 @@ const StocksProvider: React.FC = ({ children }) => {
     interval: string,
     outputsize: string,
   ) {
-    if (!symbol || !incomingSeries || !interval || !outputSize) {
+    if (!symbol || !incomingSeries || !interval || !outputsize) {
       return;
     }
 

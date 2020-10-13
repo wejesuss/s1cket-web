@@ -6,8 +6,10 @@ import Stocks from './pages/Stocks';
 import Favorites from './pages/Favorites';
 import Crypto from './pages/Crypto';
 import Exchange from './pages/Exchange';
+
 import { ExchangeRateProvider } from './contexts/exchangeRate';
 import { StocksProvider } from './contexts/stocks';
+import { CryptoProvider } from './contexts/crypto';
 
 const Routes: FC = () => {
   return (
@@ -28,9 +30,11 @@ const Routes: FC = () => {
         </Route>
       </StocksProvider>
 
-      <Route path="/crypto">
-        <Crypto />
-      </Route>
+      <CryptoProvider>
+        <Route path="/crypto">
+          <Crypto />
+        </Route>
+      </CryptoProvider>
 
       <Route path="/favorites">
         <Favorites />

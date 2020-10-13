@@ -59,16 +59,6 @@ export interface IsResultsEmpty {
   bySymbol: boolean;
 }
 
-export interface CryptoFormSearchProps {
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setMarket: React.Dispatch<React.SetStateAction<string>>;
-  setSeries: React.Dispatch<React.SetStateAction<string>>;
-  search: string;
-  market: string;
-  series: string;
-  searchBySymbol: Function;
-}
-
 export interface ExchangeRateForm {
   from: string;
   to: string;

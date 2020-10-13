@@ -6,20 +6,17 @@ import DataList from '../DataList';
 
 import { waitTwoMinutes } from '../../helpers';
 
-import { CryptoFormSearchProps } from '../../@types';
-
 import searchIcon from '../../assets/search.svg';
 import './styles.css';
+import { useCrypto } from '../../hooks/useCrypto';
 
-const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
-  setSearch,
-  setMarket,
-  setSeries,
-  search,
-  market,
-  series,
-  searchBySymbol,
-}) => {
+const CryptoFormSearch: React.FC = () => {
+  const {
+    form: { market, search, series },
+    searchBySymbol,
+    updateForm,
+  } = useCrypto();
+
   function handleSearchCrypto(e: FormEvent) {
     e.preventDefault();
 
@@ -40,7 +37,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           name="series"
           label="Série Temporal"
           value={series}
-          onChange={(e) => setSeries(e.target.value)}
+          onChange={(e) => updateForm({ series: e.target.value })}
           options={[
             { label: 'Daily', value: 'daily' },
             { label: 'Weekly', value: 'weekly' },
@@ -55,7 +52,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           spellCheck="false"
           autoComplete="off"
           list="physical-list"
-          onChange={(e) => setMarket(e.target.value)}
+          onChange={(e) => updateForm({ market: e.target.value })}
           value={market}
         />
 
@@ -66,7 +63,7 @@ const CryptoFormSearch: React.FC<CryptoFormSearchProps> = ({
           spellCheck="false"
           autoComplete="off"
           list="digital-list"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => updateForm({ search: e.target.value })}
           value={search}
         />
 
