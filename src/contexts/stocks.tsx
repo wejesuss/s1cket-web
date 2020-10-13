@@ -1,42 +1,11 @@
 import React, { createContext, useState } from 'react';
+
 import api from '../services/api';
-
 import {
-  PolishedIntradayDailyAndWeekly as PolishedStocks,
   PolishedSearch,
+  PolishedIntradayDailyAndWeekly as PolishedStocks,
 } from '../services/api-types';
-
-interface StocksForm {
-  type: string;
-  search: string;
-  series: string;
-  intervalTime: string;
-  outputSize: string;
-}
-
-export interface StocksData {
-  byName: PolishedSearch;
-  bySymbol?: PolishedStocks;
-  form: StocksForm;
-  isResultsEmpty: {
-    byName: boolean;
-    bySymbol: boolean;
-  };
-  searchBySymbol(
-    symbol: string,
-    incomingSeries: string,
-    interval: string,
-    outputsize: string,
-  ): Promise<void>;
-  searchByName(name: string): Promise<void>;
-  updateForm({
-    intervalTime,
-    outputSize,
-    search,
-    series,
-    type,
-  }: Partial<StocksForm>): void;
-}
+import { StocksData, StocksForm } from '../@types';
 
 const StocksContext = createContext({} as StocksData);
 

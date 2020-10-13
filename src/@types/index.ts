@@ -5,7 +5,9 @@ import {
   PolishedCryptoSeriesData,
   PolishedExchangeRate,
   PolishedInformations,
-  PolishedIntradayDailyAndWeekly,
+  PolishedIntradayDailyAndWeekly as PolishedStocks,
+  PolishedCryptoSeries as PCryptoSeries,
+  PolishedSearch,
 } from '../services/api-types';
 
 export interface HeaderProps {
@@ -70,6 +72,57 @@ export interface ExchangeRateData {
   isResultsEmpty: boolean;
   updateExchangeRate(fromC: string, toC: string): void;
   updateForm({ from, to }: Partial<ExchangeRateForm>): void;
+}
+
+export interface StocksForm {
+  type: string;
+  search: string;
+  series: string;
+  intervalTime: string;
+  outputSize: string;
+}
+
+export interface StocksData {
+  byName: PolishedSearch;
+  bySymbol?: PolishedStocks;
+  form: StocksForm;
+  isResultsEmpty: {
+    byName: boolean;
+    bySymbol: boolean;
+  };
+  searchBySymbol(
+    symbol: string,
+    incomingSeries: string,
+    interval: string,
+    outputsize: string,
+  ): Promise<void>;
+  searchByName(name: string): Promise<void>;
+  updateForm({
+    intervalTime,
+    outputSize,
+    search,
+    series,
+    type,
+  }: Partial<StocksForm>): void;
+}
+
+export interface CryptoForm {
+  series: string;
+  market: string;
+  search: string;
+}
+
+export interface CryptoData {
+  resultsBySymbol?: PCryptoSeries;
+  code: string;
+  form: CryptoForm;
+  isResultsEmpty: boolean;
+  updateForm({ market, search, series }: Partial<CryptoForm>): void;
+  searchBySymbol(
+    symbol: string,
+    incomingSeries: string,
+    incomingMarket: string,
+  ): Promise<void>;
 }
 
 export type CandleStickPolished = {

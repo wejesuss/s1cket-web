@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { CryptoContext, CryptoData } from '../contexts/crypto';
+import { CryptoContext } from '../contexts/crypto';
+import { CryptoData } from '../@types';
 
 function useCrypto(): CryptoData {
   const context = useContext(CryptoContext);

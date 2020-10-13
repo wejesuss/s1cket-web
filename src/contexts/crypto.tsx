@@ -2,25 +2,7 @@ import React, { createContext, useState } from 'react';
 
 import api from '../services/api';
 import { PolishedCryptoSeries as CryptoSeries } from '../services/api-types';
-
-interface CryptoForm {
-  series: string;
-  market: string;
-  search: string;
-}
-
-export interface CryptoData {
-  resultsBySymbol?: CryptoSeries;
-  code: string;
-  form: CryptoForm;
-  isResultsEmpty: boolean;
-  updateForm({ market, search, series }: Partial<CryptoForm>): void;
-  searchBySymbol(
-    symbol: string,
-    incomingSeries: string,
-    incomingMarket: string,
-  ): Promise<void>;
-}
+import { CryptoData, CryptoForm } from '../@types';
 
 const CryptoContext = createContext({} as CryptoData);
 

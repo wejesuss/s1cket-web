@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { StocksContext, StocksData } from '../contexts/stocks';
+import { StocksContext } from '../contexts/stocks';
+import { StocksData } from '../@types';
 
 function useStocks(): StocksData {
   const context = useContext(StocksContext);
