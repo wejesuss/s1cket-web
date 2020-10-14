@@ -35,8 +35,9 @@ const CryptoArticle: React.FC<CryptoArticleProps> = ({
           <div className="row">
             <h5>Mercado: </h5>
             <h6>
-              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-              {currencyName}/{currency}
+              {currencyName}
+              <>/</>
+              {currency}
             </h6>
           </div>
 
