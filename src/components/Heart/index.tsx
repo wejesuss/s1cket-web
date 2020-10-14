@@ -70,8 +70,6 @@ const Heart: React.FC<HeartProps> = ({
       (favorite) => favorite.id === (favoriteData as FavoritesData).id,
     );
 
-    setIsFavorited(false);
-
     if (index !== -1) {
       setIsFavorited(true);
     }
