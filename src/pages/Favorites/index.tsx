@@ -71,6 +71,7 @@ const Favorites: React.FC = () => {
       });
 
       localStorage.setItem('last', `${Date.now()}`);
+      localStorage.setItem(`favorites-${param}`, JSON.stringify(newFavorites));
       setFavorites(newFavorites);
     } catch (error) {
       console.error(error);
