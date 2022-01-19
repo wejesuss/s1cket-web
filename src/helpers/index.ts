@@ -1,9 +1,10 @@
 export function waitTwoMinutes(): boolean {
-  const twoMinutes = 120000;
-  const twoMinutesWaited =
-    Date.now() > Number(localStorage.getItem('last')) + twoMinutes;
+  return true;
+  // const twoMinutes = 120000;
+  // const twoMinutesWaited =
+  //  Date.now() > Number(localStorage.getItem('last')) + twoMinutes;
 
-  return twoMinutesWaited;
+  // return twoMinutesWaited;
 }
 
 export function getFavoriteQueryParam(params: string): string {
